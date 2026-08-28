@@ -214,5 +214,23 @@ export const PRODUCTS = [
     description: 'A beautifully patterned burgundy tunic paired with matching trousers. Ideal for a relaxed yet put-together look.',
     sizes: ['XS', 'S', 'M', 'L'],
     colors: ['Burgundy'],
+  },
+  {
+    id: 'zey-013',
+    name: 'Sage Ruffled Lounge & Party Set',
+    category: 'Party Wear',
+    categoryId: 'party-wear',
+    price: 649,
+    originalPrice: 1000,
+    rating: 4.9,
+    reviews: 32,
+    badge: 'New Arrival',
+    isFeatured: false,
+    image: '/images/base_dress 13.jpg',
+    images: ['/images/base_dress 13.jpg', '/images/base_dress 13.jpg', '/images/base_dress 13.jpg'],
+    tagline: 'Chic sage green textured co-ord set with Peter Pan collar and ruffled hem.',
+    description: 'Elevate your wardrobe with this breezy sage green textured co-ord set. Featuring a charming rounded collar, delicate ruffle accents, and relaxed-fit matching trousers for effortless sophistication.',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Sage Green'],
   }
 ];
