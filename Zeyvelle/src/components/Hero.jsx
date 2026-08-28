@@ -31,7 +31,7 @@ export const Hero = () => {
           }}
         />
 
-        {/* Dark Gold Gradient Vignette Overlays for Maximum Luxury Readability */}
+        {/* Dark gold Gradient Vignette Overlays for Maximum Luxury Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/50 to-noir/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-noir/80 via-transparent to-noir/80" />
         <div className="absolute inset-0 bg-gold/5 pointer-events-none" />
@@ -64,7 +64,7 @@ export const Hero = () => {
         </button>
       </div>
 
-      {/* Decorative Gold Corner Borders */}
+      {/* Decorative gold Corner Borders */}
       <div className="absolute top-8 left-8 w-8 h-8 border-t-2 border-l-2 border-gold/60 pointer-events-none hidden sm:block" />
       <div className="absolute top-8 right-8 w-8 h-8 border-t-2 border-r-2 border-gold/60 pointer-events-none hidden sm:block" />
       <div className="absolute bottom-8 left-8 w-8 h-8 border-b-2 border-l-2 border-gold/60 pointer-events-none hidden sm:block" />

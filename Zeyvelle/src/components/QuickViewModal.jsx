@@ -7,6 +7,7 @@ export const QuickViewModal = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const [isAdded, setIsAdded] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (!quickViewProduct) return null;
 
@@ -38,15 +39,34 @@ export const QuickViewModal = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left Column: Product Image */}
-          <div className="relative aspect-[3/4] md:aspect-auto bg-noir-950">
-            <img
-              src={quickViewProduct.image}
-              alt={quickViewProduct.name}
-              className="w-full h-full object-cover filter brightness-95"
-            />
-            {quickViewProduct.badge && (
-              <div className="absolute top-4 left-4 bg-noir-950/80 backdrop-blur-md border border-gold/40 px-3 py-1 text-xs uppercase tracking-widest text-gold">
-                {quickViewProduct.badge}
+          <div className="relative flex flex-col h-full bg-noir-950 p-4">
+            <div className="relative aspect-[3/4] md:aspect-auto md:h-full bg-noir-950 flex-1 w-full overflow-hidden">
+              <img
+                src={quickViewProduct.images ? quickViewProduct.images[activeImageIndex] : quickViewProduct.image}
+                alt={quickViewProduct.name}
+                className="absolute inset-0 w-full h-full object-cover filter brightness-95"
+              />
+              {quickViewProduct.badge && (
+                <div className="absolute top-4 left-4 bg-noir-950/80 backdrop-blur-md border border-gold/40 px-3 py-1 text-xs uppercase tracking-widest text-gold z-10">
+                  {quickViewProduct.badge}
+                </div>
+              )}
+            </div>
+            
+            {/* Thumbnails */}
+            {quickViewProduct.images && quickViewProduct.images.length > 1 && (
+              <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gold/20">
+                {quickViewProduct.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`relative w-20 h-28 shrink-0 border transition-all ${
+                      activeImageIndex === idx ? 'border-gold scale-105 shadow-gold-sm z-10' : 'border-gold/20 opacity-60 hover:opacity-100 hover:border-gold/50'
+                    }`}
+                  >
+                    <img src={img} alt={`${quickViewProduct.name} view ${idx + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
               </div>
             )}
           </div>

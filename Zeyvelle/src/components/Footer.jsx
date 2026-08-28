@@ -12,7 +12,7 @@ const InstagramIcon = ({ className = "w-4 h-4" }) => (
 export const Footer = () => {
   return (
     <footer id="contact" className="bg-noir-950 text-silk pt-20 pb-8 border-t border-gold/30 relative overflow-hidden">
-      {/* Hairline Gold Glow Top Accent */}
+      {/* Hairline gold Glow Top Accent */}
       <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gold-gradient shadow-gold-sm" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -34,7 +34,7 @@ export const Footer = () => {
               Redefining modern women's couture with timeless elegance, sculpted tailoring, and opulent natural fabrics. Where Elegance Blossoms.
             </p>
 
-            {/* Social Icons in Gold Outlines */}
+            {/* Social Icons in gold Outlines */}
             <div className="pt-2 flex items-center space-x-3">
               <a
                 href="https://instagram.com"

@@ -18,7 +18,7 @@ export const CATEGORIES = [
   {
     id: 'co-ord-set',
     name: 'Co-ord Set',
-    subtitle: 'Monochrome Luxe & Silk Ensembles',
+    subtitle: 'Monochrome Luxe & silk Ensembles',
     itemCount: '16 Items',
     image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1000&auto=format&fit=crop',
     overlayColor: 'from-black/80 via-black/40 to-transparent',

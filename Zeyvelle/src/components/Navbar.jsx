@@ -85,7 +85,7 @@ export const Navbar = () => {
           >
             <ShoppingBag className="w-5 h-5 text-silk group-hover:text-gold transition-colors" />
             
-            {/* Gold Badge */}
+            {/* gold Badge */}
             {totalItemsCount > 0 && (
               <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gold-gradient text-noir font-bold text-[11px] flex items-center justify-center shadow-gold-sm animate-pulse-glow">
                 {totalItemsCount}

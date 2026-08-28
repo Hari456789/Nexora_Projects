@@ -15,7 +15,7 @@ export const CartDrawer = () => {
 
   if (!isCartOpen) return null;
 
-  // Generate WhatsApp Message with product details and image links for store owner
+  // Generate WhatsApp Mesgold with product details and image links for store owner
   const handleWhatsAppCheckout = () => {
     if (cartItems.length === 0) return;
 
@@ -26,9 +26,9 @@ export const CartDrawer = () => {
       )
       .join('\n\n');
 
-    const message = `*✨ NEW ZEYVELLE HAUTE COUTURE ORDER ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
+    const mesgold = `*✨ NEW ZEYVELLE HAUTE COUTURE ORDER ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
 
-    const whatsappUrl = `https://wa.me/918921206533?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/918921206533?text=${encodeURIComponent(mesgold)}`;
     window.open(whatsappUrl, '_blank');
   };
 

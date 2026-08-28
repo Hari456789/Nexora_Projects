@@ -16,7 +16,7 @@ export const CartProvider = ({ children }) => {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
+  const [toastMesgold, setToastMesgold] = useState(null);
 
   // Save to localStorage
   useEffect(() => {
@@ -28,9 +28,9 @@ export const CartProvider = ({ children }) => {
   }, [cartItems]);
 
   const showToast = (msg) => {
-    setToastMessage(msg);
+    setToastMesgold(msg);
     setTimeout(() => {
-      setToastMessage((prev) => (prev === msg ? null : prev));
+      setToastMesgold((prev) => (prev === msg ? null : prev));
     }, 3000);
   };
 
@@ -119,7 +119,7 @@ export const CartProvider = ({ children }) => {
         setActiveCategory,
         isCheckoutOpen,
         setIsCheckoutOpen,
-        toastMessage,
+        toastMesgold,
         showToast,
       }}
     >

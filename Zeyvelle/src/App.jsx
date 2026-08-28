@@ -11,13 +11,13 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { Sparkles } from 'lucide-react';
 
 const ToastNotification = () => {
-  const { toastMessage } = useCart();
-  if (!toastMessage) return null;
+  const { toastMesgold } = useCart();
+  if (!toastMesgold) return null;
 
   return (
     <div className="fixed bottom-6 right-6 z-50 bg-noir-900 border border-gold text-silk px-5 py-3 shadow-gold-lg flex items-center space-x-3 animate-slide-up">
       <Sparkles className="w-4 h-4 text-gold flex-shrink-0" />
-      <span className="text-xs uppercase tracking-wider font-medium">{toastMessage}</span>
+      <span className="text-xs uppercase tracking-wider font-medium">{toastMesgold}</span>
     </div>
   );
 };

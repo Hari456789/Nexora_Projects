@@ -34,7 +34,7 @@ export const ProductsSection = () => {
 
   return (
     <section id="shop" className="py-24 bg-noir relative border-t border-gold/15">
-      {/* Background Decorative Gold Glow */}
+      {/* Background Decorative gold Glow */}
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

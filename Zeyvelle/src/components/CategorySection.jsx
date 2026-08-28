@@ -54,7 +54,7 @@ export const CategorySection = () => {
                 className="w-full h-full object-cover filter brightness-90 contrast-105 group-hover:scale-110 transition-transform duration-700 ease-out"
               />
 
-              {/* Dark Gold-Tinted Overlay */}
+              {/* Dark gold-Tinted Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-noir-950 via-noir-900/60 to-gold/10 group-hover:via-noir-950/80 group-hover:to-gold/20 transition-all duration-500" />
 
               {/* Card Content Overlay */}
