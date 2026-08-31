@@ -23,18 +23,17 @@ export const Hero = () => {
       {/* Full-Screen Edge-to-Edge Photorealistic Background Image */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <img
-          src="/hero-fullscreen.png"
+          src="/royal_red_gown.jpg"
           alt="Zeyvelle Haute Couture Full-Screen Hero"
-          className="w-full h-full object-cover object-center filter brightness-90 contrast-105 transition-transform duration-100 ease-out"
+          className="w-full h-full object-cover object-[center_70%] transition-transform duration-100 ease-out"
           style={{
             transform: `scale(${parallaxScale}) translateY(${parallaxTranslateY}px)`,
           }}
         />
 
-        {/* Dark gold Gradient Vignette Overlays for Maximum Luxury Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-noir via-noir/50 to-noir/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-noir/80 via-transparent to-noir/80" />
-        <div className="absolute inset-0 bg-gold/5 pointer-events-none" />
+        {/* Lighter Gradient Vignette Overlays for Readability without hiding the image */}
+        <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
       {/* Hero Content Centered over Full-Screen Image */}

@@ -7,12 +7,12 @@
   --color-gold-bronze: #AA771C;
   --color-gold-glow: rgba(212, 175, 55, 0.25);
 
-  --color-noir-950: #050505;
-  --color-noir: #0A0A0A;
-  --color-noir-900: #121212;
-  --color-noir-800: #1A1A1A;
-  --color-noir-700: #262626;
-  --color-noir-600: #333333;
+  --color-noir-950: #000000;
+  --color-noir: #000000;
+  --color-noir-900: #050505;
+  --color-noir-800: #0A0A0A;
+  --color-noir-700: #111111;
+  --color-noir-600: #1A1A1A;
 
   --color-silk: #F5F5F0;
 
@@ -83,6 +83,16 @@
 @keyframes pulseGlow {
   0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
   100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+  50% { transform: translateY(-30px) scale(1.3); opacity: 1; }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.5) rotate(180deg); box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.9); }
 }
 
 .animate-fade-in {

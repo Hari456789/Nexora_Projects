@@ -25,6 +25,23 @@ const ToastNotification = () => {
 function MainLayout() {
   return (
     <div className="min-h-screen bg-noir text-silk relative font-sans selection:bg-gold selection:text-noir">
+      {/* Global 3D HD Sparkling Particle Effects */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        {[...Array(60)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute bg-white rounded-full shadow-[0_0_12px_3px_rgba(255,255,255,0.9)]"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 1.5}px`,
+              height: `${Math.random() * 4 + 1.5}px`,
+              animation: `float ${Math.random() * 4 + 3}s ease-in-out infinite, sparkle ${Math.random() * 3 + 1.5}s linear infinite`,
+              animationDelay: `${Math.random() * 3}s`
+            }}
+          />
+        ))}
+      </div>
       <Navbar />
       <main>
         <Hero />
