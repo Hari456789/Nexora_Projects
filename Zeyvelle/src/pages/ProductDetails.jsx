@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { PRODUCTS } from '../data/products';
 import { Star, ShoppingBag, Plus, Minus, Check, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { ProductReviews } from '../components/ProductReviews';
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -202,6 +203,9 @@ export const ProductDetails = () => {
           </div>
         </div>
       </div>
+
+      {/* Reviews Section */}
+      <ProductReviews productId={product.id} />
     </div>
   );
 };

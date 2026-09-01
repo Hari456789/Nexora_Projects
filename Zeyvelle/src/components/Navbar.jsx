@@ -39,9 +39,9 @@ export const Navbar = () => {
         <a href="/#home" className="flex items-center space-x-3 group cursor-pointer">
           <div className="bg-noir-950/80 border border-gold/40 p-1.5 rounded-lg group-hover:border-gold transition-colors">
             <img
-              src="/logo.png"
+              src="/images/black logo.jpeg"
               alt="Zeyvelle Clothing Logo"
-              className="h-9 w-auto object-contain filter drop-shadow-[0_0_8px_rgba(212,175,55,0.3)]"
+              className="h-9 w-auto object-contain"
             />
           </div>
           <span className="font-serif text-xl tracking-[0.2em] text-silk font-bold group-hover:text-gold transition-colors hidden sm:inline-block">
@@ -72,7 +72,7 @@ export const Navbar = () => {
             aria-label="Search"
           >
             <Search className="w-5 h-5" />
-          </button>
+          </a>
 
           {/* Cart Trigger */}
           <button

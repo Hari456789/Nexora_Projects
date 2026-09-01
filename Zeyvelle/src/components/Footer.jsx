@@ -23,9 +23,9 @@ export const Footer = () => {
             <a href="#home" className="inline-block group">
               <div className="bg-noir-900 border border-gold/30 p-2 rounded-xl inline-block group-hover:border-gold transition-colors">
                 <img
-                  src="/logo.png"
+                  src="/images/black logo.jpeg"
                   alt="Zeyvelle Clothing Official Logo"
-                  className="h-16 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]"
+                  className="h-16 w-auto object-contain"
                 />
               </div>
             </a>

@@ -75,9 +75,9 @@ export const Hero = () => {
         {/* Logo */}
         <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 relative flex items-center justify-center">
           <img
-            src="/logo.png"
+            src="/images/black logo.jpeg"
             alt="Zeyvelle Logo"
-            className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+            className="w-full h-full object-contain"
           />
         </div>
 
