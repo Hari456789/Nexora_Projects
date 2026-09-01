@@ -8,9 +8,10 @@ import { ProductReviews } from '../components/ProductReviews';
 export const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const { addToCart, getProductRating } = useCart();
   
   const product = PRODUCTS.find(p => p.id === id);
+  const ratingInfo = product ? getProductRating(product.id) : { rating: '0.0', reviewCount: 0, hasReviews: false };
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
@@ -95,10 +96,15 @@ export const ProductDetails = () => {
             <div className="flex items-center space-x-3 text-xs uppercase tracking-[0.2em] text-gold/80">
               <span className="bg-gold/10 px-3 py-1 border border-gold/20 rounded-full">{product.category}</span>
               <div className="flex items-center space-x-1 text-gold bg-noir-950 px-3 py-1 border border-gold/20 rounded-full shadow-gold-sm">
-                <Star className="w-3.5 h-3.5 fill-gold" />
-                <span>{product.rating} ({product.reviews} Reviews)</span>
+                <Star className={`w-3.5 h-3.5 ${ratingInfo.hasReviews ? 'fill-gold text-gold' : 'text-gold/40'}`} />
+                <span>
+                  {ratingInfo.hasReviews
+                    ? `${ratingInfo.rating} (${ratingInfo.reviewCount} ${ratingInfo.reviewCount === 1 ? 'Review' : 'Reviews'})`
+                    : '0.0 (0 Reviews)'}
+                </span>
               </div>
             </div>
+
 
             <div>
               <h2 className="font-serif text-4xl sm:text-5xl font-bold text-silk leading-tight">

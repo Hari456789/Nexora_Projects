@@ -18,6 +18,74 @@ export const CartProvider = ({ children }) => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [toastMesgold, setToastMesgold] = useState(null);
 
+  // Live product reviews state initialized from localStorage
+  const [reviewsData, setReviewsData] = useState(() => {
+    try {
+      const loaded = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('reviews_')) {
+          const productId = key.replace('reviews_', '');
+          const item = localStorage.getItem(key);
+          if (item) {
+            const parsed = JSON.parse(item);
+            // Remove all legacy default mock reviews (e.g. Anonymous Shopper)
+            const cleaned = Array.isArray(parsed)
+              ? parsed.filter((r) => r.name !== 'Anonymous Shopper')
+              : [];
+            if (cleaned.length > 0) {
+              loaded[productId] = cleaned;
+            }
+          }
+        }
+      }
+      return loaded;
+    } catch (e) {
+      console.error('Could not load reviews from localStorage', e);
+      return {};
+    }
+  });
+
+  const getReviews = (productId) => {
+    return reviewsData[productId] || [];
+  };
+
+  const getProductRating = (productId) => {
+    const reviews = getReviews(productId);
+    if (!reviews || reviews.length === 0) {
+      return { rating: '0.0', reviewCount: 0, hasReviews: false };
+    }
+    const sum = reviews.reduce((acc, r) => acc + (Number(r.rating) || 0), 0);
+    const avg = (sum / reviews.length).toFixed(1);
+    return { rating: avg, reviewCount: reviews.length, hasReviews: true };
+  };
+
+  const addReview = (productId, { name, text, rating }) => {
+    const newReview = {
+      id: Date.now(),
+      name: name.trim(),
+      text: text.trim(),
+      rating: Number(rating) || 5,
+      date: new Date().toLocaleDateString(),
+    };
+
+    setReviewsData((prev) => {
+      const currentReviews = prev[productId] || [];
+      const updated = [newReview, ...currentReviews];
+      try {
+        localStorage.setItem(`reviews_${productId}`, JSON.stringify(updated));
+      } catch (e) {
+        console.error('Could not save review to localStorage', e);
+      }
+      return {
+        ...prev,
+        [productId]: updated,
+      };
+    });
+
+    showToast(`Thank you! Your review for product has been posted.`);
+  };
+
   // Save to localStorage
   useEffect(() => {
     try {
@@ -121,6 +189,10 @@ export const CartProvider = ({ children }) => {
         setIsCheckoutOpen,
         toastMesgold,
         showToast,
+        reviewsData,
+        getReviews,
+        getProductRating,
+        addReview,
       }}
     >
       {children}
@@ -135,3 +207,6 @@ export const useCart = () => {
   }
   return context;
 };
+
+export const useReviews = useCart;
+

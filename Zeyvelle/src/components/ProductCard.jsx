@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export const ProductCard = ({ product }) => {
-  const { cartItems, addToCart, updateQuantity, setQuickViewProduct } = useCart();
+  const { cartItems, addToCart, updateQuantity, setQuickViewProduct, getProductRating } = useCart();
   const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || 'M');
+
+  const ratingInfo = getProductRating(product.id);
 
   // Find if this product (with selected size) is already in the cart
   const cartItem = cartItems.find(
@@ -79,11 +81,20 @@ export const ProductCard = ({ product }) => {
         <div>
           <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-gold/70 mb-1">
             <span>{product.category}</span>
-            <div className="flex items-center space-x-1 text-gold">
-              <Star className="w-3 h-3 fill-gold text-gold" />
-              <span>{product.rating}</span>
+            <div
+              className="flex items-center space-x-1"
+              title={ratingInfo.hasReviews ? `${ratingInfo.reviewCount} ${ratingInfo.reviewCount === 1 ? 'review' : 'reviews'}` : 'No reviews yet'}
+            >
+              <Star className={`w-3 h-3 ${ratingInfo.hasReviews ? 'fill-gold text-gold' : 'text-gold/30'}`} />
+              <span className={ratingInfo.hasReviews ? 'text-gold font-semibold' : 'text-silk/40'}>
+                {ratingInfo.hasReviews ? ratingInfo.rating : '0.0'}
+              </span>
+              <span className="text-[10px] text-silk/40 font-normal">
+                ({ratingInfo.reviewCount})
+              </span>
             </div>
           </div>
+
 
           <h3
             onClick={goToDetails}

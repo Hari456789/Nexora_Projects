@@ -3,13 +3,15 @@ import { useCart } from '../context/CartContext';
 import { X, Star, ShoppingBag, Plus, Minus, Check, ShieldCheck } from 'lucide-react';
 
 export const QuickViewModal = () => {
-  const { quickViewProduct, setQuickViewProduct, addToCart } = useCart();
+  const { quickViewProduct, setQuickViewProduct, addToCart, getProductRating } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const [isAdded, setIsAdded] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   if (!quickViewProduct) return null;
+
+  const ratingInfo = getProductRating(quickViewProduct.id);
 
   const handleAddToCart = () => {
     addToCart(quickViewProduct, quantity, selectedSize);
@@ -78,10 +80,15 @@ export const QuickViewModal = () => {
                 <span>{quickViewProduct.category}</span>
                 <span>•</span>
                 <div className="flex items-center space-x-1 text-gold">
-                  <Star className="w-3.5 h-3.5 fill-gold" />
-                  <span>{quickViewProduct.rating} ({quickViewProduct.reviews} Reviews)</span>
+                  <Star className={`w-3.5 h-3.5 ${ratingInfo.hasReviews ? 'fill-gold text-gold' : 'text-gold/40'}`} />
+                  <span>
+                    {ratingInfo.hasReviews
+                      ? `${ratingInfo.rating} (${ratingInfo.reviewCount} ${ratingInfo.reviewCount === 1 ? 'Review' : 'Reviews'})`
+                      : '0.0 (0 Reviews)'}
+                  </span>
                 </div>
               </div>
+
 
               <h2 className="font-serif text-3xl font-bold text-silk">
                 {quickViewProduct.name}

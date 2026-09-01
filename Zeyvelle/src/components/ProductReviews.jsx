@@ -1,45 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Star } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 export const ProductReviews = ({ productId }) => {
-  const [reviews, setReviews] = useState([]);
+  const { getReviews, addReview } = useCart();
+  const reviews = getReviews(productId);
   const [newReview, setNewReview] = useState({ name: '', text: '', rating: 5 });
-
-  useEffect(() => {
-    const savedReviews = localStorage.getItem(`reviews_${productId}`);
-    if (savedReviews) {
-      setReviews(JSON.parse(savedReviews));
-    } else {
-      // Mock initial review
-      setReviews([
-        {
-          id: 1,
-          name: 'Anonymous Shopper',
-          rating: 5,
-          text: 'Absolutely love this piece! The quality is amazing and it fits perfectly.',
-          date: new Date().toLocaleDateString()
-        }
-      ]);
-    }
-  }, [productId]);
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     if (!newReview.name.trim() || !newReview.text.trim()) return;
 
-    const reviewToAdd = {
-      ...newReview,
-      id: Date.now(),
-      date: new Date().toLocaleDateString()
-    };
-
-    const updatedReviews = [reviewToAdd, ...reviews];
-    setReviews(updatedReviews);
-    localStorage.setItem(`reviews_${productId}`, JSON.stringify(updatedReviews));
+    addReview(productId, newReview);
 
     // Reset form
     setNewReview({ name: '', text: '', rating: 5 });
   };
+
 
   const renderStars = (rating, interactive = false) => {
     return (
