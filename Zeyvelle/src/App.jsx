@@ -1,14 +1,14 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { CartProvider, useCart } from './context/CartContext';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { CategorySection } from './components/CategorySection';
-import { ProductsSection } from './components/ProductsSection';
 import { Footer } from './components/Footer';
 import { CartDrawer } from './components/CartDrawer';
 import { QuickViewModal } from './components/QuickViewModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { Sparkles } from 'lucide-react';
+import { Home } from './pages/Home';
+import { ProductDetails } from './pages/ProductDetails';
 
 const ToastNotification = () => {
   const { toastMesgold } = useCart();
@@ -20,6 +20,15 @@ const ToastNotification = () => {
       <span className="text-xs uppercase tracking-wider font-medium">{toastMesgold}</span>
     </div>
   );
+};
+
+// ScrollToTop component to ensure pages start at the top
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
 };
 
 function MainLayout() {
@@ -42,13 +51,18 @@ function MainLayout() {
           />
         ))}
       </div>
-      <Navbar />
-      <main>
-        <Hero />
-        <CategorySection />
-        <ProductsSection />
-      </main>
-      <Footer />
+      
+      <BrowserRouter>
+        <ScrollToTop />
+        <Navbar />
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+        </Routes>
+        
+        <Footer />
+      </BrowserRouter>
 
       {/* Global Modals & Drawers */}
       <CartDrawer />

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Eye, Star, Plus, Minus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export const ProductCard = ({ product }) => {
   const { cartItems, addToCart, updateQuantity, setQuickViewProduct } = useCart();
+  const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || 'M');
 
   // Find if this product (with selected size) is already in the cart
@@ -27,10 +29,14 @@ export const ProductCard = ({ product }) => {
     updateQuantity(product.id, -1, selectedSize);
   };
 
+  const goToDetails = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
     <div className="group relative bg-noir-900 border border-gold/20 hover:border-gold rounded-none overflow-hidden transition-all duration-500 hover:shadow-gold-lg flex flex-col justify-between">
       {/* Top Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-noir-950 cursor-pointer" onClick={() => setQuickViewProduct(product)}>
+      <div className="relative aspect-[3/4] overflow-hidden bg-noir-950 cursor-pointer" onClick={goToDetails}>
         <img
           src={product.image}
           alt={product.name}
@@ -80,7 +86,7 @@ export const ProductCard = ({ product }) => {
           </div>
 
           <h3
-            onClick={() => setQuickViewProduct(product)}
+            onClick={goToDetails}
             className="font-serif text-lg font-bold text-silk group-hover:text-gold transition-colors cursor-pointer line-clamp-1"
           >
             {product.name}
@@ -109,7 +115,10 @@ export const ProductCard = ({ product }) => {
               {product.sizes.slice(0, 4).map((size) => (
                 <button
                   key={size}
-                  onClick={() => setSelectedSize(size)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedSize(size);
+                  }}
                   className={`text-[10px] font-semibold w-6 h-6 rounded-none flex items-center justify-center border transition-colors ${
                     selectedSize === size
                       ? 'border-gold bg-gold text-noir'

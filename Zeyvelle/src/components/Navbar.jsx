@@ -20,10 +20,10 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Collections', href: '#categories' },
-    { name: 'Shop', href: '#shop' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/#home' },
+    { name: 'Collections', href: '/#categories' },
+    { name: 'Shop', href: '/#shop' },
+    { name: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -36,7 +36,7 @@ export const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Left: Official Brand Logo Image */}
-        <a href="#home" className="flex items-center space-x-3 group cursor-pointer">
+        <a href="/#home" className="flex items-center space-x-3 group cursor-pointer">
           <div className="bg-noir-950/80 border border-gold/40 p-1.5 rounded-lg group-hover:border-gold transition-colors">
             <img
               src="/logo.png"
@@ -65,12 +65,9 @@ export const Navbar = () => {
 
         {/* Right: Cart Icon & Action Buttons */}
         <div className="flex items-center space-x-5">
-          <button
-            onClick={() => {
-              const shopSection = document.getElementById('shop');
-              if (shopSection) shopSection.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="text-silk/70 hover:text-gold transition-colors p-1.5 rounded-full hover:bg-gold/10 hidden sm:block"
+          <a
+            href="/#shop"
+            className="text-silk/70 hover:text-gold transition-colors p-1.5 rounded-full hover:bg-gold/10 hidden sm:block cursor-pointer"
             title="Search Catalog"
             aria-label="Search"
           >
