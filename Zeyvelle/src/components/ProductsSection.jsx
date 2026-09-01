@@ -15,7 +15,6 @@ export const ProductsSection = () => {
     { id: 'western', label: 'Western' },
     { id: 'party-wear', label: 'Party Wear' },
     { id: 'co-ord-set', label: 'Co-ord Set' },
-    { id: 'shorts', label: 'Shorts' },
     { id: 'crop-tops', label: 'Crop Tops' },
   ];
 
@@ -96,60 +95,28 @@ export const ProductsSection = () => {
           </div>
         )}
 
-        {/* DEFAULT VIEW: Exactly 4 Featured Product Cards Grid (2 cols mobile, 4 cols desktop) */}
-        {!isCatalogExpanded && activeCategory === 'all' ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {featured4Products.map((product) => (
+        {/* CATALOG VIEW */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 animate-fade-in">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          /* EXPANDED OR FILTERED CATALOG VIEW */
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 animate-fade-in">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))
-            ) : (
-              <div className="col-span-full py-16 text-center space-y-4">
-                <p className="font-serif text-2xl text-silk/60">No creations found in this collection.</p>
-                <button
-                  onClick={() => {
-                    setActiveCategory('all');
-                    setSearchQuery('');
-                  }}
-                  className="px-6 py-2 border border-gold text-gold text-xs uppercase tracking-widest hover:bg-gold hover:text-noir transition-colors"
-                >
-                  Reset Category Filters
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Centered "View All" Button / Catalog Toggle */}
-        <div className="mt-16 text-center">
-          {!isCatalogExpanded && activeCategory === 'all' ? (
-            <button
-              onClick={() => setIsCatalogExpanded(true)}
-              className="group relative inline-flex items-center space-x-3 px-10 py-4 border border-gold text-gold font-sans text-xs uppercase tracking-[0.25em] font-semibold transition-all duration-500 hover:text-noir gold-shimmer-btn"
-            >
-              <span className="absolute inset-0 bg-gold-gradient transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-              <span className="relative z-10">View All Products ({PRODUCTS.length})</span>
-              <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform duration-300" />
-            </button>
+            ))
           ) : (
-            isCatalogExpanded && (
+            <div className="col-span-full py-16 text-center space-y-4">
+              <p className="font-serif text-2xl text-silk/60">No creations found in this collection.</p>
               <button
-                onClick={() => setIsCatalogExpanded(false)}
-                className="inline-flex items-center space-x-2 px-8 py-3 border border-white/20 text-silk/80 text-xs uppercase tracking-widest hover:border-gold hover:text-gold transition-colors"
+                onClick={() => {
+                  setActiveCategory('all');
+                  setSearchQuery('');
+                }}
+                className="px-6 py-2 border border-gold text-gold text-xs uppercase tracking-widest hover:bg-gold hover:text-noir transition-colors"
               >
-                <span>Collapse Catalog</span>
-                <X className="w-4 h-4" />
+                Reset Category Filters
               </button>
-            )
+            </div>
           )}
         </div>
+
       </div>
     </section>
   );

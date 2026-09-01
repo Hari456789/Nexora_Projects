@@ -39,8 +39,8 @@ export const CategorySection = () => {
           </p>
         </div>
 
-        {/* Categories Grid (Responsive: 1 col mobile, 2 sm, 3 md, 5 desktop) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        {/* Categories Grid (Responsive: 1 col mobile, 2 sm, 4 desktop) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {CATEGORIES.map((cat) => (
             <div
               key={cat.id}

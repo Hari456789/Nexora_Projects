@@ -24,14 +24,6 @@ export const CATEGORIES = [
     overlayColor: 'from-black/80 via-black/40 to-transparent',
   },
   {
-    id: 'shorts',
-    name: 'Shorts',
-    subtitle: 'High-waisted Linen & Leather Edges',
-    itemCount: '12 Items',
-    image: 'https://images.unsplash.com/photo-1591369822096-ffd140ec948f?q=80&w=1000&auto=format&fit=crop',
-    overlayColor: 'from-black/80 via-black/40 to-transparent',
-  },
-  {
     id: 'crop-tops',
     name: 'Crop Tops',
     subtitle: 'Sculpted Bodices & Minimal Knits',
