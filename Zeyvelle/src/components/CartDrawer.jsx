@@ -51,7 +51,7 @@ export const CartDrawer = () => {
     let itemsText = cartItems
       .map(
         (item, index) =>
-          `${index + 1}. *${item.product.name}*\n   • Size: ${item.selectedSize}\n   • Quantity: ${item.quantity}\n   • Item Price: ₹${item.product.price.toLocaleString('en-IN')} (Subtotal: ₹${(item.product.price * item.quantity).toLocaleString('en-IN')})\n   • Image Link: ${encodeURI(window.location.origin + item.product.image)}`
+          `${index + 1}. *${item.product.name}*\n   • Size: ${item.selectedSize}\n   • Quantity: ${item.quantity}\n   • Item Price: ₹${item.product.price.toLocaleString('en-IN')} (Subtotal: ₹${(item.product.price * item.quantity).toLocaleString('en-IN')})\n   • Product Link: ${encodeURI(window.location.origin + '/product/' + item.product.id)}`
       )
       .join('\n\n');
 
