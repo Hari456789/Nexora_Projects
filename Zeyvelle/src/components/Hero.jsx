@@ -41,7 +41,11 @@ export const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="relative w-full h-screen bg-black overflow-hidden flex items-center justify-center">
+    <section 
+      id="home" 
+      className="relative w-full h-screen bg-black overflow-hidden flex items-center justify-start px-8 md:px-24"
+      style={{ backgroundImage: "url('/images/newlogo.jpeg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+    >
       
       {/* Glittering Gold & Silver Particles Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
@@ -68,12 +72,12 @@ export const Hero = () => {
         })}
       </div>
 
-      {/* Hero Content Centered */}
+      {/* Hero Content on the Left Side */}
       <div
-        className="relative z-20 max-w-4xl mx-auto px-6 text-center flex flex-col items-center justify-center space-y-8 animate-fade-in"
+        className="relative z-20 flex flex-col justify-center items-center text-center space-y-6 animate-fade-in w-full md:w-1/2 h-full"
       >
         {/* Logo */}
-        <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 relative flex items-center justify-center">
+        <div className="w-24 h-24 sm:w-32 sm:h-32 relative flex items-center justify-center">
           <img
             src="/images/black logo.jpeg"
             alt="Zeyvelle Logo"
@@ -82,7 +86,7 @@ export const Hero = () => {
         </div>
 
         {/* Brand Name */}
-        <h1 className="font-serif text-5xl sm:text-7xl lg:text-8xl text-gold-gradient font-bold tracking-[0.2em] drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] uppercase">
+        <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl text-gold-gradient font-bold tracking-[0.2em] drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] uppercase">
           Zeyvelle
         </h1>
         
@@ -91,7 +95,7 @@ export const Hero = () => {
           Where Elegance Blossoms
         </p>
 
-        <div className="w-36 h-[2px] bg-gold-gradient mx-auto mt-6 shadow-gold-sm" />
+        <div className="w-36 h-[2px] bg-gold-gradient mt-4 shadow-gold-sm mx-auto" />
       </div>
 
       {/* Decorative gold Corner Borders */}
