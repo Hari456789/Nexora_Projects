@@ -63,7 +63,7 @@ export const ProductDetails = () => {
             <img
               src={product.images ? product.images[activeImageIndex] : product.image}
               alt={product.name}
-              className="absolute inset-0 w-full h-full object-cover filter brightness-95 transition-all duration-500 hover:scale-110 cursor-crosshair"
+              className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 transition-all duration-500 hover:scale-110 cursor-crosshair"
             />
             {product.badge && (
               <div className="absolute top-6 left-6 bg-noir-950/80 backdrop-blur-md border border-gold/40 px-4 py-1.5 text-xs uppercase tracking-[0.2em] font-medium text-gold z-10 shadow-lg shadow-gold/20">
@@ -83,7 +83,7 @@ export const ProductDetails = () => {
                     activeImageIndex === idx ? 'border-gold scale-105 shadow-gold-md z-10' : 'border-gold/20 opacity-60 hover:opacity-100 hover:border-gold/50'
                   }`}
                 >
-                  <img src={img} alt={`${product.name} view ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img src={img} alt={`${product.name} view ${idx + 1}`} className="w-full h-full object-cover object-top" />
                 </button>
               ))}
             </div>

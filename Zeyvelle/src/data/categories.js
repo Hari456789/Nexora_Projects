@@ -16,11 +16,11 @@ export const CATEGORIES = [
     overlayColor: 'from-black/80 via-black/40 to-transparent',
   },
   {
-    id: 'co-ord-set',
-    name: 'Co-ord Set',
+    id: 'tops',
+    name: 'Tops',
     subtitle: 'Monochrome Luxe & silk Ensembles',
     itemCount: '2 Items',
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1000&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?q=80&w=1000&auto=format&fit=crop',
     overlayColor: 'from-black/80 via-black/40 to-transparent',
   },
   {

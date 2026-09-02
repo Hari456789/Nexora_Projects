@@ -42,13 +42,13 @@ export const ProductCard = ({ product }) => {
         <img
           src={product.image}
           alt={product.name}
-          className={`absolute inset-0 w-full h-full object-cover filter brightness-95 contrast-105 group-hover:scale-105 transition-all duration-700 ease-out ${product.images && product.images.length > 1 ? 'group-hover:opacity-0' : ''}`}
+          className={`absolute inset-0 w-full h-full object-cover object-top filter brightness-95 contrast-105 group-hover:scale-105 transition-all duration-700 ease-out ${product.images && product.images.length > 1 ? 'group-hover:opacity-0' : ''}`}
         />
         {product.images && product.images.length > 1 && (
           <img
             src={product.images[1]}
             alt={`${product.name} alternate view`}
-            className="absolute inset-0 w-full h-full object-cover filter brightness-95 contrast-105 scale-110 opacity-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out"
+            className="absolute inset-0 w-full h-full object-cover object-top filter brightness-95 contrast-105 scale-110 opacity-0 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 ease-out"
           />
         )}
 

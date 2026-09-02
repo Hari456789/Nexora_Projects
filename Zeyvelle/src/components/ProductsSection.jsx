@@ -14,7 +14,7 @@ export const ProductsSection = () => {
     { id: 'all', label: 'All Creations' },
     { id: 'western', label: 'Western' },
     { id: 'party-wear', label: 'Party Wear' },
-    { id: 'co-ord-set', label: 'Co-ord Set' },
+    { id: 'tops', label: 'Tops' },
     { id: 'crop-tops', label: 'Crop Tops' },
   ];
 

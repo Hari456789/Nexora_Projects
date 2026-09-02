@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { X, Trash2, Plus, Minus, ShoppingBag, Send, ShieldCheck, Truck } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, Send, ShieldCheck, Truck, ArrowLeft } from 'lucide-react';
 
 export const CartDrawer = () => {
   const {
@@ -13,11 +13,29 @@ export const CartDrawer = () => {
     totalItemsCount,
   } = useCart();
 
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [customerDetails, setCustomerDetails] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    address: ''
+  });
+
   if (!isCartOpen) return null;
 
   // Generate WhatsApp Mesgold with product details and image links for store owner
   const handleWhatsAppCheckout = () => {
     if (cartItems.length === 0) return;
+
+    if (!isCheckingOut) {
+      setIsCheckingOut(true);
+      return;
+    }
+
+    if (!customerDetails.name || !customerDetails.phone || !customerDetails.address) {
+      alert("Please fill in your Name, Phone Number, and Address to proceed.");
+      return;
+    }
 
     let itemsText = cartItems
       .map(
@@ -26,17 +44,24 @@ export const CartDrawer = () => {
       )
       .join('\n\n');
 
-    const mesgold = `*✨ NEW ZEYVELLE HAUTE COUTURE ORDER ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
+    const customerInfo = `*Customer Details:*\nName: ${customerDetails.name}\nPhone: ${customerDetails.phone}\nEmail: ${customerDetails.email || 'N/A'}\nAddress: ${customerDetails.address}\n\n`;
+
+    const mesgold = `*✨ NEW ZEYVELLE HAUTE COUTURE ORDER ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${customerInfo}*Order Items:*\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
 
     const whatsappUrl = `https://wa.me/918921206533?text=${encodeURIComponent(mesgold)}`;
     window.open(whatsappUrl, '_blank');
+  };
+
+  const handleClose = () => {
+    setIsCheckingOut(false);
+    closeCart();
   };
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop Overlay */}
       <div
-        onClick={closeCart}
+        onClick={handleClose}
         className="absolute inset-0 bg-noir-950/80 backdrop-blur-sm transition-opacity animate-fade-in"
       />
 
@@ -47,21 +72,30 @@ export const CartDrawer = () => {
           {/* Drawer Header */}
           <div className="p-6 border-b border-gold/20 flex items-center justify-between bg-noir-900">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-full border border-gold/40 bg-gold/10">
-                <ShoppingBag className="w-5 h-5 text-gold" />
-              </div>
+              {isCheckingOut ? (
+                <button 
+                  onClick={() => setIsCheckingOut(false)}
+                  className="p-2 rounded-full border border-gold/40 bg-gold/10 hover:bg-gold/20 text-gold transition-colors"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+              ) : (
+                <div className="p-2 rounded-full border border-gold/40 bg-gold/10">
+                  <ShoppingBag className="w-5 h-5 text-gold" />
+                </div>
+              )}
               <div>
                 <h2 className="font-serif text-xl font-bold tracking-wider text-silk">
-                  YOUR SHOPPING BAG
+                  {isCheckingOut ? 'CUSTOMER DETAILS' : 'YOUR SHOPPING BAG'}
                 </h2>
                 <p className="text-[10px] uppercase tracking-widest text-gold/70">
-                  {totalItemsCount} {totalItemsCount === 1 ? 'Creation' : 'Creations'} Selected
+                  {isCheckingOut ? 'Secure Checkout' : `${totalItemsCount} ${totalItemsCount === 1 ? 'Creation' : 'Creations'} Selected`}
                 </p>
               </div>
             </div>
 
             <button
-              onClick={closeCart}
+              onClick={handleClose}
               className="p-2 text-silk/60 hover:text-gold hover:bg-gold/10 rounded-full transition-colors"
               aria-label="Close cart"
             >
@@ -69,9 +103,60 @@ export const CartDrawer = () => {
             </button>
           </div>
 
-          {/* Cart Items List */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 divide-y divide-gold/10">
-            {cartItems.length > 0 ? (
+          {/* Main Content Area */}
+          <div className={`flex-1 overflow-y-auto p-6 space-y-6 ${!isCheckingOut && 'divide-y divide-gold/10'}`}>
+            {isCheckingOut ? (
+              <div className="space-y-4 animate-fade-in">
+                <p className="text-xs text-silk/70 mb-4">Please provide your details for delivery. We will prepare your bespoke order and confirm via WhatsApp.</p>
+                
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={customerDetails.name}
+                    onChange={(e) => setCustomerDetails({ ...customerDetails, name: e.target.value })}
+                    className="w-full bg-noir-950 border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 transition-colors"
+                    placeholder="E.g. Jane Doe"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Phone Number *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={customerDetails.phone}
+                    onChange={(e) => setCustomerDetails({ ...customerDetails, phone: e.target.value })}
+                    className="w-full bg-noir-950 border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 transition-colors"
+                    placeholder="+91 9876543210"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Email Address</label>
+                  <input
+                    type="email"
+                    value={customerDetails.email}
+                    onChange={(e) => setCustomerDetails({ ...customerDetails, email: e.target.value })}
+                    className="w-full bg-noir-950 border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 transition-colors"
+                    placeholder="jane@example.com"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Complete Home Address *</label>
+                  <textarea
+                    required
+                    rows="4"
+                    value={customerDetails.address}
+                    onChange={(e) => setCustomerDetails({ ...customerDetails, address: e.target.value })}
+                    className="w-full bg-noir-950 border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 resize-none transition-colors"
+                    placeholder="House No, Street, City, Pincode"
+                  />
+                </div>
+              </div>
+            ) : cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <div
                   key={`${item.product.id}-${item.selectedSize}`}
@@ -147,7 +232,7 @@ export const CartDrawer = () => {
                   Explore our haute couture collections and add your favorite creations.
                 </p>
                 <button
-                  onClick={closeCart}
+                  onClick={handleClose}
                   className="px-6 py-2.5 border border-gold text-gold text-xs uppercase tracking-widest hover:bg-gold hover:text-noir transition-colors"
                 >
                   Start Shopping
@@ -188,7 +273,7 @@ export const CartDrawer = () => {
                 className="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-sans text-xs uppercase tracking-[0.2em] font-bold shadow-lg hover:shadow-emerald-500/20 transition-all duration-300 flex items-center justify-center space-x-2 rounded-none"
               >
                 <Send className="w-4 h-4" />
-                <span>Checkout via WhatsApp (+91 8921206533)</span>
+                <span>{isCheckingOut ? 'Send Order via WhatsApp' : 'Proceed to Checkout'}</span>
               </button>
 
               <div className="flex items-center justify-center space-x-2 text-[10px] text-silk/40 uppercase tracking-widest pt-1">
