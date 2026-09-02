@@ -43,9 +43,21 @@ export const Hero = () => {
   return (
     <section 
       id="home" 
-      className="relative w-full h-screen bg-black overflow-hidden flex items-center justify-start px-8 md:px-24"
-      style={{ backgroundImage: "url('/images/newlogo.jpeg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}
+      className="relative w-full h-screen bg-black overflow-hidden flex items-center justify-center md:justify-start px-4 sm:px-8 md:px-24"
     >
+      {/* Mobile Pannable Background */}
+      <div className="absolute inset-0 md:hidden z-0 overflow-x-auto overflow-y-hidden snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <img 
+          src="/images/newmobilelogo.jpeg" 
+          alt="Swipeable Background" 
+          className="h-full w-auto max-w-none min-w-[150vw] object-cover"
+        />
+      </div>
+      {/* Desktop Background */}
+      <div 
+        className="absolute inset-0 hidden md:block bg-cover bg-right bg-no-repeat z-0"
+        style={{ backgroundImage: "url('/images/newlogo.jpeg')" }}
+      />
       
       {/* Glittering Gold & Silver Particles Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
@@ -72,19 +84,10 @@ export const Hero = () => {
         })}
       </div>
 
-      {/* Hero Content on the Left Side */}
+      {/* Hero Content */}
       <div
-        className="relative z-20 flex flex-col justify-center items-center text-center space-y-6 animate-fade-in w-full md:w-1/2 h-full"
+        className="relative z-20 flex flex-col justify-center items-center text-center space-y-4 sm:space-y-6 animate-fade-in w-full md:w-1/2 h-full mt-32 md:mt-0"
       >
-        {/* Logo */}
-        <div className="w-24 h-24 sm:w-32 sm:h-32 relative flex items-center justify-center">
-          <img
-            src="/images/black logo.jpeg"
-            alt="Zeyvelle Logo"
-            className="w-full h-full object-contain"
-          />
-        </div>
-
         {/* Brand Name */}
         <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl text-gold-gradient font-bold tracking-[0.2em] drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)] uppercase">
           Zeyvelle
