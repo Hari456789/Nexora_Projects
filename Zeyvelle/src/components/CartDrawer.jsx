@@ -32,21 +32,32 @@ export const CartDrawer = () => {
       return;
     }
 
-    if (!customerDetails.name || !customerDetails.phone || !customerDetails.address) {
-      alert("Please fill in your Name, Phone Number, and Address to proceed.");
+    if (!customerDetails.name || !customerDetails.phone || !customerDetails.email || !customerDetails.address) {
+      alert("Please fill in all compulsory fields (Name, Phone Number, Email, and Address) to proceed.");
+      return;
+    }
+
+    const digitsOnly = customerDetails.phone.replace(/\D/g, '');
+    if (digitsOnly.length !== 10) {
+      alert("Phone number must contain exactly 10 digits.");
+      return;
+    }
+
+    if (!customerDetails.email.toLowerCase().includes('@gmail.com')) {
+      alert("Email address must contain @gmail.com to proceed.");
       return;
     }
 
     let itemsText = cartItems
       .map(
         (item, index) =>
-          `${index + 1}. *${item.product.name}*\n   • Size: ${item.selectedSize}\n   • Quantity: ${item.quantity}\n   • Item Price: ₹${item.product.price.toLocaleString('en-IN')} (Subtotal: ₹${(item.product.price * item.quantity).toLocaleString('en-IN')})\n   • Image Link: ${item.product.image}`
+          `${index + 1}. *${item.product.name}*\n   • Size: ${item.selectedSize}\n   • Quantity: ${item.quantity}\n   • Item Price: ₹${item.product.price.toLocaleString('en-IN')} (Subtotal: ₹${(item.product.price * item.quantity).toLocaleString('en-IN')})\n   • Image Link: ${encodeURI(window.location.origin + item.product.image)}`
       )
       .join('\n\n');
 
     const customerInfo = `*Customer Details:*\nName: ${customerDetails.name}\nPhone: ${customerDetails.phone}\nEmail: ${customerDetails.email || 'N/A'}\nAddress: ${customerDetails.address}\n\n`;
 
-    const mesgold = `*✨ NEW ZEYVELLE HAUTE COUTURE ORDER ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${customerInfo}*Order Items:*\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
+    const mesgold = `*✨ ZEYVELLE CLOTHING ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${customerInfo}*Order Items:*\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
 
     const whatsappUrl = `https://wa.me/918921206533?text=${encodeURIComponent(mesgold)}`;
     window.open(whatsappUrl, '_blank');
@@ -134,9 +145,10 @@ export const CartDrawer = () => {
                 </div>
                 
                 <div>
-                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Email Address</label>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Email Address *</label>
                   <input
                     type="email"
+                    required
                     value={customerDetails.email}
                     onChange={(e) => setCustomerDetails({ ...customerDetails, email: e.target.value })}
                     className="w-full bg-noir-950 border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 transition-colors"
