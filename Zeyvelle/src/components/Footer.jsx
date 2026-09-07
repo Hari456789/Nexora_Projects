@@ -23,7 +23,7 @@ export const Footer = () => {
             <a href="#home" className="inline-block group">
               <div className="bg-noir-900 border border-gold/30 p-2 rounded-xl inline-block group-hover:border-gold transition-colors">
                 <img
-                  src="/images/black logo.jpeg"
+                  src="/images/zv-reference.jpg"
                   alt="Zeyvelle Clothing Official Logo"
                   className="h-16 w-auto object-contain"
                 />

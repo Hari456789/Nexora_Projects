@@ -39,7 +39,7 @@ export const Navbar = () => {
         <a href="/#home" className="flex items-center space-x-3 group cursor-pointer">
           <div className="bg-noir-950/80 border border-gold/40 p-1.5 rounded-lg group-hover:border-gold transition-colors">
             <img
-              src="/images/black logo.jpeg"
+              src="/images/zv-reference.jpg"
               alt="Zeyvelle Clothing Logo"
               className="h-9 w-auto object-contain"
             />
