@@ -167,6 +167,11 @@ export const CartProvider = ({ children }) => {
     0
   );
 
+  const totalWeight = cartItems.reduce(
+    (acc, item) => acc + ((item.product.weight || 500) * item.quantity),
+    0
+  );
+
   return (
     <CartContext.Provider
       value={{
@@ -181,6 +186,7 @@ export const CartProvider = ({ children }) => {
         closeCart,
         totalItemsCount,
         subtotal,
+        totalWeight,
         quickViewProduct,
         setQuickViewProduct,
         activeCategory,

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import { X, Trash2, Plus, Minus, ShoppingBag, Send, ShieldCheck, Truck, ArrowLeft } from 'lucide-react';
+import { getLocationFromPincode, getDeliveryCharge } from '../utils/deliveryTariffs';
 
 export const CartDrawer = () => {
   const {
@@ -11,6 +12,7 @@ export const CartDrawer = () => {
     updateQuantity,
     subtotal,
     totalItemsCount,
+    totalWeight,
   } = useCart();
 
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -18,8 +20,47 @@ export const CartDrawer = () => {
     name: '',
     phone: '',
     email: '',
-    address: ''
+    address: '',
+    pincode: '',
+    area: ''
   });
+
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  const [isAreaEditable, setIsAreaEditable] = useState(true);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      const pin = customerDetails.pincode.replace(/\D/g, '');
+      if (pin.length === 6) {
+        setIsLoadingLocation(true);
+        try {
+          const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+          const data = await res.json();
+          if (data && data[0] && data[0].Status === 'Success') {
+            const postOffice = data[0].PostOffice[0];
+            const newArea = `${postOffice.Name}, ${postOffice.District}, ${postOffice.State}`;
+            setCustomerDetails(prev => ({ ...prev, area: newArea }));
+            setIsAreaEditable(false);
+          } else {
+            setIsAreaEditable(true);
+            setCustomerDetails(prev => ({ ...prev, area: '' }));
+          }
+        } catch (err) {
+          setIsAreaEditable(true);
+        } finally {
+          setIsLoadingLocation(false);
+        }
+      } else {
+         setIsAreaEditable(true);
+      }
+    };
+    
+    fetchLocation();
+  }, [customerDetails.pincode]);
+
+  const locationType = getLocationFromPincode(customerDetails.pincode);
+  const deliveryCharge = getDeliveryCharge(totalWeight, locationType);
+  const totalAmount = subtotal + deliveryCharge;
 
   if (!isCartOpen) return null;
 
@@ -55,9 +96,10 @@ export const CartDrawer = () => {
       )
       .join('\n\n');
 
-    const customerInfo = `*Customer Details:*\nName: ${customerDetails.name}\nPhone: ${customerDetails.phone}\nEmail: ${customerDetails.email || 'N/A'}\nAddress: ${customerDetails.address}\n\n`;
+    const locationLabel = locationType === 'local' ? 'Local Area' : locationType === 'within_state' ? 'Within State' : locationType === 'other_states' ? 'Outside State' : 'International';
+    const customerInfo = `*Customer Details:*\nName: ${customerDetails.name}\nPhone: ${customerDetails.phone}\nEmail: ${customerDetails.email || 'N/A'}\nAddress: ${customerDetails.address}\nPincode: ${customerDetails.pincode}\nArea: ${customerDetails.area}\nDelivery Zone: ${locationLabel}\n\n`;
 
-    const mesgold = `*✨ ZEYVELLE CLOTHING ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${customerInfo}*Order Items:*\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*COMPLIMENTARY SHIPPING:* Applied\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
+    const mesgold = `*✨ ZEYVELLE CLOTHING ✨*\n\nHello Zeyvelle Atelier! I would like to place an order:\n\n${customerInfo}*Order Items:*\n${itemsText}\n\n------------------------------------\n*ORDER SUBTOTAL:* ₹${subtotal.toLocaleString('en-IN')}\n*DELIVERY CHARGE:* ₹${deliveryCharge.toLocaleString('en-IN')}\n*TOTAL AMOUNT:* ₹${totalAmount.toLocaleString('en-IN')}\n------------------------------------\n\nPlease confirm availability and payment instructions. Thank you!`;
 
     const whatsappUrl = `https://wa.me/918921206533?text=${encodeURIComponent(mesgold)}`;
     window.open(whatsappUrl, '_blank');
@@ -167,6 +209,36 @@ export const CartDrawer = () => {
                     placeholder="House No, Street, City, Pincode"
                   />
                 </div>
+                
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Pincode / Zipcode *</label>
+                  <input
+                    type="text"
+                    required
+                    value={customerDetails.pincode}
+                    onChange={(e) => setCustomerDetails({ ...customerDetails, pincode: e.target.value })}
+                    className="w-full bg-noir-950 border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 transition-colors appearance-none"
+                    placeholder="E.g. 686001"
+                  />
+                  {customerDetails.pincode.length >= 6 && !isLoadingLocation && (
+                     <p className="text-[10px] text-emerald-400/80 mt-1 uppercase tracking-widest">
+                       Delivery Zone: {locationType.replace('_', ' ')}
+                     </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest text-gold font-medium">Area / Location *</label>
+                  <input
+                    type="text"
+                    required
+                    disabled={!isAreaEditable && !isLoadingLocation}
+                    value={isLoadingLocation ? 'Detecting location...' : customerDetails.area}
+                    onChange={(e) => setCustomerDetails({ ...customerDetails, area: e.target.value })}
+                    className={`w-full border border-gold/30 text-silk text-xs py-2.5 px-3 focus:outline-none focus:border-gold mt-1 transition-colors ${!isAreaEditable && !isLoadingLocation ? 'opacity-70 bg-noir-900 cursor-not-allowed' : 'bg-noir-950'}`}
+                    placeholder="Enter City, State, Country"
+                  />
+                </div>
               </div>
             ) : cartItems.length > 0 ? (
               cartItems.map((item) => (
@@ -259,7 +331,7 @@ export const CartDrawer = () => {
               {/* Shipping Perks */}
               <div className="flex items-center space-x-2 text-[11px] text-gold/80 bg-gold/5 border border-gold/20 p-2.5">
                 <Truck className="w-4 h-4 text-gold flex-shrink-0" />
-                <span>Complimentary Express Shipping Applied</span>
+                <span>Delivery Charge Applied: ₹{deliveryCharge.toLocaleString('en-IN')}</span>
               </div>
 
               {/* Subtotal Calculation */}
@@ -270,12 +342,12 @@ export const CartDrawer = () => {
                 </div>
                 <div className="flex justify-between text-xs text-silk/60">
                   <span>Bespoke Packaging & Insured Shipping</span>
-                  <span className="text-gold uppercase text-[10px]">Complimentary</span>
+                  <span className="font-serif text-sm font-bold text-silk">₹{deliveryCharge.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="w-full h-[1px] bg-gold/15 my-2" />
                 <div className="flex justify-between text-base font-bold">
                   <span className="font-serif text-silk">Total</span>
-                  <span className="font-serif text-2xl text-gold">₹{subtotal.toLocaleString('en-IN')}</span>
+                  <span className="font-serif text-2xl text-gold">₹{totalAmount.toLocaleString('en-IN')}</span>
                 </div>
               </div>
 
