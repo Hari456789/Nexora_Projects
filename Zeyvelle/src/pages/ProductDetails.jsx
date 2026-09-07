@@ -95,6 +95,7 @@ export const ProductDetails = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-3 text-xs uppercase tracking-[0.2em] text-gold/80">
               <span className="bg-gold/10 px-3 py-1 border border-gold/20 rounded-full">{product.category}</span>
+              <span className="bg-gold/10 px-3 py-1 border border-gold/20 rounded-full">Code: {product.id}</span>
               <div className="flex items-center space-x-1 text-gold bg-noir-950 px-3 py-1 border border-gold/20 rounded-full shadow-gold-sm">
                 <Star className={`w-3.5 h-3.5 ${ratingInfo.hasReviews ? 'fill-gold text-gold' : 'text-gold/40'}`} />
                 <span>

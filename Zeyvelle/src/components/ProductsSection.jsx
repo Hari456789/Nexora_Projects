@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { Sparkles, X, ArrowRight, Search } from 'lucide-react';
 
 export const ProductsSection = () => {
-  const { activeCategory, setActiveCategory } = useCart();
+  const { activeCategory, setActiveCategory, setQuickViewProduct } = useCart();
   const [isCatalogExpanded, setIsCatalogExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,7 +24,8 @@ export const ProductsSection = () => {
       activeCategory === 'all' || product.categoryId === activeCategory;
     const matchesSearch =
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase());
+      product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.id.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -73,27 +74,34 @@ export const ProductsSection = () => {
           ))}
         </div>
 
-        {/* Search Bar when in catalog mode or filtered view */}
-        {activeCategory !== 'all' && (
-          <div className="max-w-md mx-auto mb-10 relative">
-            <input
-              type="text"
-              placeholder="Search by product name or style..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-noir-900 border border-gold/30 text-silk text-xs py-3 px-4 pl-10 focus:outline-none focus:border-gold transition-colors"
-            />
-            <Search className="w-4 h-4 text-gold/60 absolute left-3 top-3.5" />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-3.5 text-silk/40 hover:text-gold"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        )}
+        {/* Search Bar */}
+        <div className="max-w-md mx-auto mb-10 relative">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Search by product name or style..."
+            value={searchQuery}
+            onChange={(e) => {
+              const val = e.target.value;
+              setSearchQuery(val);
+              const exactMatch = PRODUCTS.find(p => p.id.toLowerCase() === val.toLowerCase());
+              if (exactMatch) {
+                setQuickViewProduct(exactMatch);
+                setSearchQuery('');
+              }
+            }}
+            className="w-full bg-noir-900 border border-gold/30 text-silk text-xs py-3 px-4 pl-10 focus:outline-none focus:border-gold transition-colors"
+          />
+          <Search className="w-4 h-4 text-gold/60 absolute left-3 top-3.5" />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-3.5 text-silk/40 hover:text-gold"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
 
         {/* CATALOG VIEW */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 animate-fade-in">

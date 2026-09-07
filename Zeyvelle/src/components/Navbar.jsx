@@ -67,6 +67,9 @@ export const Navbar = () => {
         <div className="flex items-center space-x-5">
           <a
             href="/#shop"
+            onClick={() => {
+              setTimeout(() => document.getElementById('search-input')?.focus(), 100);
+            }}
             className="text-silk/70 hover:text-gold transition-colors p-1.5 rounded-full hover:bg-gold/10 hidden sm:block cursor-pointer"
             title="Search Catalog"
             aria-label="Search"

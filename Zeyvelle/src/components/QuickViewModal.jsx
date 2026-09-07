@@ -79,6 +79,8 @@ export const QuickViewModal = () => {
               <div className="flex items-center space-x-2 text-xs uppercase tracking-widest text-gold/80">
                 <span>{quickViewProduct.category}</span>
                 <span>•</span>
+                <span>Code: {quickViewProduct.id}</span>
+                <span>•</span>
                 <div className="flex items-center space-x-1 text-gold">
                   <Star className={`w-3.5 h-3.5 ${ratingInfo.hasReviews ? 'fill-gold text-gold' : 'text-gold/40'}`} />
                   <span>

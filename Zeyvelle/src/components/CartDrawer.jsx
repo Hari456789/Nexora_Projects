@@ -13,6 +13,7 @@ export const CartDrawer = () => {
     subtotal,
     totalItemsCount,
     totalWeight,
+    clearCart,
   } = useCart();
 
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -92,7 +93,7 @@ export const CartDrawer = () => {
     let itemsText = cartItems
       .map(
         (item, index) =>
-          `${index + 1}. *${item.product.name}*\n   • Size: ${item.selectedSize}\n   • Quantity: ${item.quantity}\n   • Item Price: ₹${item.product.price.toLocaleString('en-IN')} (Subtotal: ₹${(item.product.price * item.quantity).toLocaleString('en-IN')})\n   • Product Link: ${encodeURI(window.location.origin + '/product/' + item.product.id)}`
+          `${index + 1}. *${item.product.name}*\n   • Size: ${item.selectedSize}\n   • Quantity: ${item.quantity}\n   • Item Price: ₹${item.product.price.toLocaleString('en-IN')} (Subtotal: ₹${(item.product.price * item.quantity).toLocaleString('en-IN')})\n   • Product Code: ${item.product.id}`
       )
       .join('\n\n');
 
@@ -103,6 +104,10 @@ export const CartDrawer = () => {
 
     const whatsappUrl = `https://wa.me/918921206533?text=${encodeURIComponent(mesgold)}`;
     window.open(whatsappUrl, '_blank');
+    
+    // Clear cart and close drawer after checkout
+    clearCart();
+    handleClose();
   };
 
   const handleClose = () => {
