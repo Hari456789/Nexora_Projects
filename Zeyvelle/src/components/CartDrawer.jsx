@@ -59,8 +59,9 @@ export const CartDrawer = () => {
     fetchLocation();
   }, [customerDetails.pincode]);
 
-  const locationType = getLocationFromPincode(customerDetails.pincode);
-  const deliveryCharge = getDeliveryCharge(totalWeight, locationType);
+  const hasValidPincode = customerDetails.pincode && customerDetails.pincode.replace(/\D/g, '').length === 6;
+  const locationType = hasValidPincode ? getLocationFromPincode(customerDetails.pincode) : null;
+  const deliveryCharge = hasValidPincode ? getDeliveryCharge(totalWeight, locationType) : 0;
   const totalAmount = subtotal + deliveryCharge;
 
   if (!isCartOpen) return null;
@@ -125,7 +126,7 @@ export const CartDrawer = () => {
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         {/* Drawer Panel */}
-        <div className="w-screen max-w-md bg-noir-950 border-l border-gold/30 shadow-2xl flex flex-col justify-between transform transition-transform duration-500 ease-in-out animate-slide-left">
+        <div className="w-screen max-w-md bg-noir-950 border-l border-gold/30 shadow-2xl flex flex-col transform transition-transform duration-500 ease-in-out animate-slide-left">
           
           {/* Drawer Header */}
           <div className="p-6 border-b border-gold/20 flex items-center justify-between bg-noir-900">
@@ -162,7 +163,7 @@ export const CartDrawer = () => {
           </div>
 
           {/* Main Content Area */}
-          <div className={`flex-1 overflow-y-auto p-6 space-y-6 ${!isCheckingOut && 'divide-y divide-gold/10'}`}>
+          <div className={`overflow-y-auto p-6 space-y-6 min-h-0 ${!isCheckingOut && 'divide-y divide-gold/10'}`}>
             {isCheckingOut ? (
               <div className="space-y-4 animate-fade-in">
                 <p className="text-xs text-silk/70 mb-4">Please provide your details for delivery. We will prepare your bespoke order and confirm via WhatsApp.</p>
@@ -334,10 +335,12 @@ export const CartDrawer = () => {
           {cartItems.length > 0 && (
             <div className="p-6 bg-noir-900 border-t border-gold/20 space-y-4">
               {/* Shipping Perks */}
-              <div className="flex items-center space-x-2 text-[11px] text-gold/80 bg-gold/5 border border-gold/20 p-2.5">
-                <Truck className="w-4 h-4 text-gold flex-shrink-0" />
-                <span>Delivery Charge Applied: ₹{deliveryCharge.toLocaleString('en-IN')}</span>
-              </div>
+              {hasValidPincode && (
+                <div className="flex items-center space-x-2 text-[11px] text-gold/80 bg-gold/5 border border-gold/20 p-2.5">
+                  <Truck className="w-4 h-4 text-gold flex-shrink-0" />
+                  <span>Delivery Charge Applied: ₹{deliveryCharge.toLocaleString('en-IN')}</span>
+                </div>
+              )}
 
               {/* Subtotal Calculation */}
               <div className="space-y-1.5 pt-2">
@@ -345,10 +348,17 @@ export const CartDrawer = () => {
                   <span>Subtotal</span>
                   <span className="font-serif text-sm font-bold text-silk">₹{subtotal.toLocaleString('en-IN')}</span>
                 </div>
-                <div className="flex justify-between text-xs text-silk/60">
-                  <span>Bespoke Packaging & Insured Shipping</span>
-                  <span className="font-serif text-sm font-bold text-silk">₹{deliveryCharge.toLocaleString('en-IN')}</span>
-                </div>
+                {hasValidPincode ? (
+                  <div className="flex justify-between text-xs text-silk/60">
+                    <span>Bespoke Packaging & Insured Shipping</span>
+                    <span className="font-serif text-sm font-bold text-silk">₹{deliveryCharge.toLocaleString('en-IN')}</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between text-xs text-silk/60">
+                    <span>Shipping</span>
+                    <span className="text-[10px] uppercase text-silk/40 tracking-widest">Calculated at checkout</span>
+                  </div>
+                )}
                 <div className="w-full h-[1px] bg-gold/15 my-2" />
                 <div className="flex justify-between text-base font-bold">
                   <span className="font-serif text-silk">Total</span>
