@@ -1,44 +1,20 @@
-import React, { useState } from 'react';
-import { ShoppingBag, Eye, Star, Plus, Minus } from 'lucide-react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
 
 export const ProductCard = ({ product }) => {
-  const { cartItems, addToCart, updateQuantity, setQuickViewProduct, getProductRating } = useCart();
   const navigate = useNavigate();
-  const [selectedSize, setSelectedSize] = useState(null);
-
-  const ratingInfo = getProductRating(product.id);
-
-  // Find if this product (with selected size) is already in the cart
-  const cartItem = cartItems.find(
-    (item) => item.product.id === product.id && item.selectedSize === selectedSize
-  );
-  const currentQuantity = cartItem ? cartItem.quantity : 0;
-
-  const handleInitialAdd = (e) => {
-    e.stopPropagation();
-    addToCart(product, 1, selectedSize);
-  };
-
-  const handleIncrease = (e) => {
-    e.stopPropagation();
-    updateQuantity(product.id, 1, selectedSize);
-  };
-
-  const handleDecrease = (e) => {
-    e.stopPropagation();
-    updateQuantity(product.id, -1, selectedSize);
-  };
 
   const goToDetails = () => {
     navigate(`/product/${product.id}`);
   };
 
   return (
-    <div className="group relative bg-noir-900 border border-gold/20 hover:border-gold rounded-none overflow-hidden transition-all duration-500 hover:shadow-gold-lg flex flex-col justify-between">
+    <div 
+      onClick={goToDetails}
+      className="group relative bg-noir-900 border border-gold/20 hover:border-gold rounded-none overflow-hidden transition-all duration-500 hover:shadow-gold-lg flex flex-col cursor-pointer h-full"
+    >
       {/* Top Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-noir-950 cursor-pointer" onClick={goToDetails}>
+      <div className="relative aspect-[4/5] overflow-hidden bg-noir-950">
         <img
           src={product.image}
           alt={product.name}
@@ -59,137 +35,25 @@ export const ProductCard = ({ product }) => {
           </div>
         )}
 
-        {/* Quick View Floating Button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setQuickViewProduct(product);
-          }}
-          className="absolute top-3 right-3 p-2 rounded-full bg-noir-950/80 backdrop-blur-md border border-gold/30 text-silk hover:text-gold hover:border-gold transition-all opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0"
-          title="Quick View"
-          aria-label="Quick View"
-        >
-          <Eye className="w-4 h-4" />
-        </button>
-
         {/* Bottom Tint Vignette */}
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-noir-900 via-noir-900/40 to-transparent pointer-events-none" />
       </div>
 
       {/* Product Details Section */}
-      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-        <div>
-          <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-gold/70 mb-1">
-            <span>{product.category}</span>
-            <div
-              className="flex items-center space-x-1"
-              title={ratingInfo.hasReviews ? `${ratingInfo.reviewCount} ${ratingInfo.reviewCount === 1 ? 'review' : 'reviews'}` : 'No reviews yet'}
-            >
-              <Star className={`w-3 h-3 ${ratingInfo.hasReviews ? 'fill-gold text-gold' : 'text-gold/30'}`} />
-              <span className={ratingInfo.hasReviews ? 'text-gold font-semibold' : 'text-silk/40'}>
-                {ratingInfo.hasReviews ? ratingInfo.rating : '0.0'}
-              </span>
-              <span className="text-[10px] text-silk/40 font-normal">
-                ({ratingInfo.reviewCount})
-              </span>
-            </div>
-          </div>
+      <div className="p-4 flex-1 flex flex-col justify-center items-center text-center space-y-2 bg-noir-900">
+        <h3 className="font-serif text-lg font-bold text-silk group-hover:text-gold transition-colors line-clamp-2">
+          {product.name}
+        </h3>
 
-
-          <h3
-            onClick={goToDetails}
-            className="font-serif text-lg font-bold text-silk group-hover:text-gold transition-colors cursor-pointer line-clamp-1"
-          >
-            {product.name}
-          </h3>
-
-          <p className="text-[12px] text-silk/50 font-light mt-1 line-clamp-1">
-            {product.tagline}
-          </p>
-
-          {/* Price Tag */}
-          <div className="flex items-baseline space-x-2 mt-2">
-            <span className="font-serif text-xl font-bold text-gold">
-              ₹{product.price.toLocaleString('en-IN')}
+        {/* Price Tag */}
+        <div className="flex items-baseline space-x-2">
+          <span className="font-serif text-xl font-bold text-gold">
+            ₹{product.price.toLocaleString('en-IN')}
+          </span>
+          {product.originalPrice && (
+            <span className="text-xs text-silk/40 line-through">
+              ₹{product.originalPrice.toLocaleString('en-IN')}
             </span>
-            {product.originalPrice && (
-              <span className="text-xs text-silk/40 line-through">
-                ₹{product.originalPrice.toLocaleString('en-IN')}
-              </span>
-            )}
-          </div>
-
-          {/* Size Selector Pill Bar */}
-          {product.sizes && product.sizes.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5 items-center">
-              <span className="text-[10px] uppercase text-silk/40 tracking-widest mr-1">Size:</span>
-              {product.sizes.map((size) => {
-                const isOutOfStock = product.outOfStockSizes?.includes(size);
-                return (
-                  <button
-                    key={size}
-                    disabled={isOutOfStock}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (!isOutOfStock) setSelectedSize(size);
-                    }}
-                    className={`relative flex flex-col items-center justify-center px-1.5 py-1 border transition-colors ${
-                      isOutOfStock 
-                        ? 'border-white/5 text-silk/20 cursor-not-allowed opacity-50 bg-transparent'
-                        : selectedSize === size
-                          ? 'border-gold bg-gold text-noir cursor-pointer'
-                          : 'border-white/10 text-silk/60 hover:border-gold/40 cursor-pointer bg-transparent'
-                    }`}
-                  >
-                    <span className="text-[10px] font-bold">{size}</span>
-                    <span className={`text-[7px] uppercase tracking-wider font-bold mt-0.5 ${isOutOfStock ? 'text-red-700' : selectedSize === size ? 'text-green-900' : 'text-green-700'}`}>
-                      {isOutOfStock ? 'Stock Out' : 'Available'}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Add to Cart / Active Quantity Stepper */}
-        <div className="pt-2 border-t border-gold/10">
-          {currentQuantity > 0 ? (
-            /* Quantity Stepper (Shown ONLY after clicking Add to Cart / when item is in cart) */
-            <div className="w-full h-11 border border-gold bg-gold/10 flex items-center justify-between px-2 transition-all duration-300">
-              <button
-                onClick={handleDecrease}
-                className="w-8 h-8 flex items-center justify-center border border-gold/40 bg-noir-950 text-gold hover:bg-gold hover:text-noir transition-colors"
-                title="Decrease quantity"
-                aria-label="Decrease quantity"
-              >
-                <Minus className="w-3.5 h-3.5" />
-              </button>
-
-              <div className="flex items-center space-x-1.5 font-serif text-xs font-bold text-gold uppercase tracking-widest select-none">
-                <span className="text-sm font-bold text-gold">{currentQuantity}</span>
-                <span className="text-[10px] text-silk/70 font-sans font-medium">in Bag</span>
-              </div>
-
-              <button
-                onClick={handleIncrease}
-                className="w-8 h-8 flex items-center justify-center border border-gold/40 bg-noir-950 text-gold hover:bg-gold hover:text-noir transition-colors"
-                title="Increase quantity"
-                aria-label="Increase quantity"
-              >
-                <Plus className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ) : (
-            /* Initial Add to Cart Button */
-            <button
-              onClick={handleInitialAdd}
-              disabled={!selectedSize}
-              className={`w-full h-11 border border-gold flex items-center justify-center space-x-2 text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 ${!selectedSize ? 'opacity-50 cursor-not-allowed text-gold/50' : 'text-gold hover:bg-gold hover:text-noir gold-shimmer-btn'}`}
-            >
-              <ShoppingBag className="w-4 h-4 shrink-0" />
-              <span>{!selectedSize ? 'Select Size' : 'Add to Cart'}</span>
-            </button>
           )}
         </div>
       </div>

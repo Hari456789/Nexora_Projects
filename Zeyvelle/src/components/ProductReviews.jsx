@@ -41,13 +41,13 @@ export const ProductReviews = ({ productId }) => {
   };
 
   return (
-    <div className="mt-16 pt-12 border-t border-gold/10">
-      <h3 className="font-serif text-3xl text-silk mb-8">Customer Reviews</h3>
+    <div className="mt-8 pt-6 border-t border-gold/10">
+      <h3 className="font-serif text-2xl text-silk mb-4">Customer Reviews</h3>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 gap-6">
         {/* Write a Review Form */}
-        <div className="bg-noir-950 p-6 sm:p-8 border border-gold/10 shadow-lg">
-          <h4 className="font-serif text-xl text-gold mb-6">Write a Review</h4>
+        <div className="bg-noir-950 p-4 sm:p-5 border border-gold/10 shadow-lg">
+          <h4 className="font-serif text-lg text-gold mb-4">Write a Review</h4>
           <form onSubmit={handleReviewSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-widest text-silk/60">Rating</label>
@@ -72,7 +72,7 @@ export const ProductReviews = ({ productId }) => {
                 required
                 value={newReview.text}
                 onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
-                className="w-full bg-noir-900 border border-gold/20 text-silk p-3 h-32 resize-none focus:outline-none focus:border-gold/60 transition-colors"
+                className="w-full bg-noir-900 border border-gold/20 text-silk p-3 h-20 resize-none focus:outline-none focus:border-gold/60 transition-colors"
                 placeholder="What did you like or dislike?"
               />
             </div>
@@ -87,13 +87,13 @@ export const ProductReviews = ({ productId }) => {
         </div>
 
         {/* Display Reviews */}
-        <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/20">
+        <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/20">
           {reviews.length === 0 ? (
             <p className="text-silk/60 italic font-serif">No reviews yet. Be the first to review!</p>
           ) : (
             reviews.map((review) => (
-              <div key={review.id} className="bg-noir-950 p-6 border border-gold/10">
-                <div className="flex justify-between items-start mb-4">
+              <div key={review.id} className="bg-noir-950 p-4 border border-gold/10">
+                <div className="flex justify-between items-start mb-2">
                   <div>
                     <h5 className="font-semibold text-silk">{review.name}</h5>
                     <span className="text-xs text-silk/40">{review.date}</span>
