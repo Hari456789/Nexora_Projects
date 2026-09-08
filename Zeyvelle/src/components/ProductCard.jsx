@@ -45,16 +45,40 @@ export const ProductCard = ({ product }) => {
           {product.name}
         </h3>
 
+        {/* Product Description */}
+        {product.description && (
+          <p className="text-[11px] text-silk/50 line-clamp-2 px-1 leading-relaxed">
+            {product.description}
+          </p>
+        )}
+
         {/* Price Tag */}
-        <div className="flex items-baseline space-x-2">
+        <div className="flex items-center space-x-2 flex-wrap justify-center mt-1">
           <span className="font-serif text-xl font-bold text-gold">
             ₹{product.price.toLocaleString('en-IN')}
           </span>
-          {product.originalPrice && (
-            <span className="text-xs text-silk/40 line-through">
-              ₹{product.originalPrice.toLocaleString('en-IN')}
-            </span>
-          )}
+          {(() => {
+            const hasRealDiscount = !!product.originalPrice;
+            const discountPercentages = [85, 87, 90, 86, 88, 89];
+            const hash = product.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            const discount = hasRealDiscount 
+              ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
+              : discountPercentages[hash % discountPercentages.length];
+            const originalPrice = hasRealDiscount 
+              ? product.originalPrice 
+              : Math.round(product.price / (1 - (discount / 100)));
+            
+            return (
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xs text-silk/40 line-through">
+                  ₹{originalPrice.toLocaleString('en-IN')}
+                </span>
+                <span className="text-[10px] text-emerald-500 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded-sm flex items-center">
+                  {discount}% <span className="ml-0.5 text-[8px]">▼</span>
+                </span>
+              </div>
+            );
+          })()}
         </div>
       </div>
     </div>
