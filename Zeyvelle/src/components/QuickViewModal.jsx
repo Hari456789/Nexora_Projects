@@ -9,6 +9,14 @@ export const QuickViewModal = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  React.useEffect(() => {
+    if (quickViewProduct) {
+      setSelectedSize(null);
+      setQuantity(1);
+      setActiveImageIndex(0);
+    }
+  }, [quickViewProduct]);
+
   if (!quickViewProduct) return null;
 
   const ratingInfo = getProductRating(quickViewProduct.id);
@@ -115,19 +123,30 @@ export const QuickViewModal = () => {
                     Select Size:
                   </label>
                   <div className="flex space-x-2">
-                    {quickViewProduct.sizes.map((sz) => (
-                      <button
-                        key={sz}
-                        onClick={() => setSelectedSize(sz)}
-                        className={`w-10 h-10 text-xs font-semibold border transition-all ${
-                          selectedSize === sz
-                            ? 'border-gold bg-gold text-noir'
-                            : 'border-white/15 text-silk hover:border-gold/50'
-                        }`}
-                      >
-                        {sz}
-                      </button>
-                    ))}
+                    {quickViewProduct.sizes.map((sz) => {
+                      const isOutOfStock = quickViewProduct.outOfStockSizes?.includes(sz);
+                      return (
+                        <button
+                          key={sz}
+                          disabled={isOutOfStock}
+                          onClick={() => {
+                            if (!isOutOfStock) setSelectedSize(sz);
+                          }}
+                          className={`relative flex flex-col items-center justify-center px-2 py-1 min-w-[3rem] border transition-all ${
+                            isOutOfStock
+                              ? 'border-white/5 text-silk/20 cursor-not-allowed opacity-50 bg-transparent'
+                              : selectedSize === sz
+                                ? 'border-gold bg-gold text-noir cursor-pointer'
+                                : 'border-white/15 text-silk hover:border-gold/50 cursor-pointer bg-transparent'
+                          }`}
+                        >
+                          <span className="text-sm font-bold">{sz}</span>
+                          <span className={`text-[8px] uppercase tracking-wider font-bold mt-1 ${isOutOfStock ? 'text-red-700' : selectedSize === sz ? 'text-green-900' : 'text-green-700'}`}>
+                            {isOutOfStock ? 'Stock Out' : 'Available'}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -161,10 +180,13 @@ export const QuickViewModal = () => {
             <div className="space-y-3 pt-4">
               <button
                 onClick={handleAddToCart}
+                disabled={!selectedSize}
                 className={`w-full py-4 uppercase tracking-[0.2em] font-semibold text-xs transition-all duration-300 flex items-center justify-center space-x-2 ${
                   isAdded
                     ? 'bg-emerald-600 text-white'
-                    : 'bg-gold-gradient text-noir font-bold hover:shadow-gold-lg gold-shimmer-btn'
+                    : !selectedSize 
+                      ? 'bg-noir-800 text-silk/50 cursor-not-allowed opacity-50' 
+                      : 'bg-gold-gradient text-noir font-bold hover:shadow-gold-lg gold-shimmer-btn'
                 }`}
               >
                 {isAdded ? (
@@ -175,7 +197,7 @@ export const QuickViewModal = () => {
                 ) : (
                   <>
                     <ShoppingBag className="w-4 h-4" />
-                    <span>Add to Bag — ₹{(quickViewProduct.price * quantity).toLocaleString('en-IN')}</span>
+                    <span>{!selectedSize ? 'Select Size' : `Add to Bag — ₹${(quickViewProduct.price * quantity).toLocaleString('en-IN')}`}</span>
                   </>
                 )}
               </button>

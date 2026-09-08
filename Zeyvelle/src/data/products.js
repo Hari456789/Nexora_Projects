@@ -13,7 +13,8 @@ export const PRODUCTS = [
     images: ['/images/product 21.jpeg'],
     tagline: 'Elegant mustard tunic with intricate hem embroidery.',
     description: 'Embrace timeless elegance with this beautiful mustard tunic and matching trousers. Featuring detailed traditional embroidery along the hem and an effortless silhouette for any occasion.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Mustard Yellow'],
   },
   {
@@ -30,7 +31,8 @@ export const PRODUCTS = [
     images: ['/images/product 20.jpeg'],
     tagline: 'Elegant dark floral party wear dress.',
     description: 'A sophisticated dark floral print dress featuring long sleeves and a button-down style, perfect for evening parties.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Dark Floral'],
   },
 
@@ -48,7 +50,8 @@ export const PRODUCTS = [
     images: ['/images/product 3.jpeg', '/images/product_3_pose_2.jpg', '/images/product_3_pose_3.jpg'],
     tagline: 'Elegant burgundy patterned tunic.',
     description: 'A beautifully patterned burgundy tunic paired with matching trousers. Ideal for a relaxed yet put-together look.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Burgundy'],
   },
   {
@@ -65,7 +68,8 @@ export const PRODUCTS = [
     images: ['/images/product 4.jpeg', '/images/product_17_pose_3.jpg'],
     tagline: 'Chic embroidered yellow crop top.',
     description: 'A beautifully crafted yellow crop top featuring delicate embroidery. Perfect for casual outings and warm days.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Yellow'],
   },
   {
@@ -82,7 +86,8 @@ export const PRODUCTS = [
     images: ['/images/product 5.jpeg'],
     tagline: 'Elegant embroidered crop top.',
     description: 'A stylish and comfortable embroidered crop top, perfect for a chic half-body look.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Assorted'],
   },
   {
@@ -99,7 +104,8 @@ export const PRODUCTS = [
     images: ['/images/product 6.jpeg'],
     tagline: 'Beautiful and versatile crop top.',
     description: 'A chic crop top featuring an elegant design. Perfect for everyday wear and casual events.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Assorted'],
   },
   {
@@ -116,7 +122,8 @@ export const PRODUCTS = [
     images: ['/images/product 7.jpeg'],
     tagline: 'A modern and stylish crop top.',
     description: 'Elevate your wardrobe with this stylish crop top. Designed to offer both comfort and fashion for any occasion.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Assorted'],
   },
   {
@@ -133,7 +140,8 @@ export const PRODUCTS = [
     images: ['/images/product 8.jpeg'],
     tagline: 'Elegant design for casual settings.',
     description: 'A beautiful crop top featuring an elegant design. Easy to pair with any outfit for a standout look.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Assorted'],
   },
   {
@@ -150,7 +158,8 @@ export const PRODUCTS = [
     images: ['/images/product 9.jpeg'],
     tagline: 'Sleek and minimalist design.',
     description: 'A beautifully simple crop top, crafted for a minimalist yet elegant look.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Assorted'],
   },
   {
@@ -167,7 +176,8 @@ export const PRODUCTS = [
     images: ['/images/product 19.jpeg'],
     tagline: 'A timeless and classic crop top.',
     description: 'Elevate your wardrobe with this classic crop top. Easy to style and perfect for any setting.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'XL', 'XXL'],
     colors: ['Assorted'],
   },
   {
@@ -184,7 +194,8 @@ export const PRODUCTS = [
     images: ['/images/product 11.jpeg'],
     tagline: 'A sophisticated western style dress.',
     description: 'Elevate your wardrobe with this stylish western dress. Designed to offer both comfort and fashion for any occasion.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -201,7 +212,8 @@ export const PRODUCTS = [
     images: ['/images/product 12.jpeg'],
     tagline: 'A beautifully styled western outfit.',
     description: 'A stylish and elegant western outfit suitable for daytime events and evening parties alike.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -218,7 +230,8 @@ export const PRODUCTS = [
     images: ['/images/product 13.jpeg'],
     tagline: 'Modern and chic western wear.',
     description: 'Update your closet with this modern western dress. Features a flattering silhouette perfect for everyday elegance.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -235,7 +248,8 @@ export const PRODUCTS = [
     images: ['/images/product 14.jpeg'],
     tagline: 'Chic and stylish western dress.',
     description: 'A beautiful western style dress that combines classic style with modern sensibility. Perfect for any elegant outing.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -252,7 +266,8 @@ export const PRODUCTS = [
     images: ['/images/product 15.jpeg'],
     tagline: 'An elegant addition to your western wardrobe.',
     description: 'This elegant western outfit offers a unique blend of comfort and high fashion. Ideal for a chic half-body look.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -269,7 +284,8 @@ export const PRODUCTS = [
     images: ['/images/product 22.jpeg'],
     tagline: 'A stunning look for your next party.',
     description: 'Make a statement with this stunning party wear outfit. Perfectly designed to help you stand out at any event.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -286,7 +302,8 @@ export const PRODUCTS = [
     images: ['/images/product 17.jpeg'],
     tagline: 'Glamorous and elegant party dress.',
     description: 'Shine all night in this glamorous party dress. Features a flattering fit for maximum elegance.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   },
   {
@@ -303,7 +320,8 @@ export const PRODUCTS = [
     images: ['/images/product 18.jpeg'],
     tagline: 'Chic and stylish western wear.',
     description: 'A beautiful western dress combining comfort and elegance. Perfect for casual or semi-formal occasions.',
-    sizes: ['XS', 'S', 'M', 'L'],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    outOfStockSizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Assorted'],
   }
 ];

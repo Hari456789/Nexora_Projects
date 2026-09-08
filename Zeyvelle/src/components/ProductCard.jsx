@@ -6,7 +6,7 @@ import { useCart } from '../context/CartContext';
 export const ProductCard = ({ product }) => {
   const { cartItems, addToCart, updateQuantity, setQuickViewProduct, getProductRating } = useCart();
   const navigate = useNavigate();
-  const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || 'M');
+  const [selectedSize, setSelectedSize] = useState(null);
 
   const ratingInfo = getProductRating(product.id);
 
@@ -121,24 +121,33 @@ export const ProductCard = ({ product }) => {
 
           {/* Size Selector Pill Bar */}
           {product.sizes && product.sizes.length > 0 && (
-            <div className="mt-3 flex items-center space-x-1.5">
+            <div className="mt-3 flex flex-wrap gap-1.5 items-center">
               <span className="text-[10px] uppercase text-silk/40 tracking-widest mr-1">Size:</span>
-              {product.sizes.slice(0, 4).map((size) => (
-                <button
-                  key={size}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedSize(size);
-                  }}
-                  className={`text-[10px] font-semibold w-6 h-6 rounded-none flex items-center justify-center border transition-colors ${
-                    selectedSize === size
-                      ? 'border-gold bg-gold text-noir'
-                      : 'border-white/10 text-silk/60 hover:border-gold/40'
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
+              {product.sizes.map((size) => {
+                const isOutOfStock = product.outOfStockSizes?.includes(size);
+                return (
+                  <button
+                    key={size}
+                    disabled={isOutOfStock}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!isOutOfStock) setSelectedSize(size);
+                    }}
+                    className={`relative flex flex-col items-center justify-center px-1.5 py-1 border transition-colors ${
+                      isOutOfStock 
+                        ? 'border-white/5 text-silk/20 cursor-not-allowed opacity-50 bg-transparent'
+                        : selectedSize === size
+                          ? 'border-gold bg-gold text-noir cursor-pointer'
+                          : 'border-white/10 text-silk/60 hover:border-gold/40 cursor-pointer bg-transparent'
+                    }`}
+                  >
+                    <span className="text-[10px] font-bold">{size}</span>
+                    <span className={`text-[7px] uppercase tracking-wider font-bold mt-0.5 ${isOutOfStock ? 'text-red-700' : selectedSize === size ? 'text-green-900' : 'text-green-700'}`}>
+                      {isOutOfStock ? 'Stock Out' : 'Available'}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -175,10 +184,11 @@ export const ProductCard = ({ product }) => {
             /* Initial Add to Cart Button */
             <button
               onClick={handleInitialAdd}
-              className="w-full h-11 border border-gold text-gold hover:bg-gold hover:text-noir gold-shimmer-btn flex items-center justify-center space-x-2 text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300"
+              disabled={!selectedSize}
+              className={`w-full h-11 border border-gold flex items-center justify-center space-x-2 text-xs uppercase tracking-[0.2em] font-semibold transition-all duration-300 ${!selectedSize ? 'opacity-50 cursor-not-allowed text-gold/50' : 'text-gold hover:bg-gold hover:text-noir gold-shimmer-btn'}`}
             >
               <ShoppingBag className="w-4 h-4 shrink-0" />
-              <span>Add to Cart</span>
+              <span>{!selectedSize ? 'Select Size' : 'Add to Cart'}</span>
             </button>
           )}
         </div>

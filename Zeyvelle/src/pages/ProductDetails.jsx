@@ -20,7 +20,7 @@ export const ProductDetails = () => {
 
   useEffect(() => {
     if (product && product.sizes) {
-      setSelectedSize(product.sizes[0]);
+      setSelectedSize(null);
     }
   }, [product]);
 
@@ -138,19 +138,30 @@ export const ProductDetails = () => {
                   Select Size
                 </label>
                 <div className="flex flex-wrap gap-3">
-                  {product.sizes.map((sz) => (
-                    <button
-                      key={sz}
-                      onClick={() => setSelectedSize(sz)}
-                      className={`w-12 h-12 text-sm font-semibold border transition-all duration-300 ${
-                        selectedSize === sz
-                          ? 'border-gold bg-gold text-noir shadow-gold-md scale-105'
-                          : 'border-white/15 text-silk hover:border-gold/50 hover:bg-gold/5'
-                      }`}
-                    >
-                      {sz}
-                    </button>
-                  ))}
+                  {product.sizes.map((sz) => {
+                    const isOutOfStock = product.outOfStockSizes?.includes(sz);
+                    return (
+                      <button
+                        key={sz}
+                        disabled={isOutOfStock}
+                        onClick={() => {
+                          if (!isOutOfStock) setSelectedSize(sz);
+                        }}
+                        className={`relative flex flex-col items-center justify-center px-3 py-2 min-w-[4rem] border transition-all duration-300 ${
+                          isOutOfStock
+                            ? 'border-white/5 text-silk/20 cursor-not-allowed opacity-50 bg-transparent'
+                            : selectedSize === sz
+                              ? 'border-gold bg-gold text-noir shadow-gold-md scale-105 cursor-pointer'
+                              : 'border-white/15 text-silk hover:border-gold/50 hover:bg-gold/5 cursor-pointer bg-transparent'
+                        }`}
+                      >
+                        <span className="text-base font-bold">{sz}</span>
+                        <span className={`text-[9px] uppercase tracking-wider font-bold mt-1 ${isOutOfStock ? 'text-red-700' : selectedSize === sz ? 'text-green-900' : 'text-green-700'}`}>
+                          {isOutOfStock ? 'Stock Out' : 'Available'}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -184,10 +195,13 @@ export const ProductDetails = () => {
           <div className="space-y-4 pt-6 border-t border-gold/10">
             <button
               onClick={handleAddToCart}
+              disabled={!selectedSize}
               className={`w-full py-5 uppercase tracking-[0.2em] font-semibold text-sm transition-all duration-300 flex items-center justify-center space-x-3 ${
                 isAdded
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-gold-gradient text-noir font-bold hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]'
+                  : !selectedSize
+                    ? 'bg-noir-800 text-silk/50 cursor-not-allowed opacity-50'
+                    : 'bg-gold-gradient text-noir font-bold hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]'
               }`}
             >
               {isAdded ? (
@@ -198,7 +212,7 @@ export const ProductDetails = () => {
               ) : (
                 <>
                   <ShoppingBag className="w-5 h-5" />
-                  <span>Add to Bag — ₹{(product.price * quantity).toLocaleString('en-IN')}</span>
+                  <span>{!selectedSize ? 'Select Size' : `Add to Bag — ₹${(product.price * quantity).toLocaleString('en-IN')}`}</span>
                 </>
               )}
             </button>
