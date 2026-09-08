@@ -11,10 +11,10 @@ export const ProductCard = ({ product }) => {
   return (
     <div 
       onClick={goToDetails}
-      className="group relative bg-noir-900 border border-gold/20 hover:border-gold rounded-none overflow-hidden transition-all duration-500 hover:shadow-gold-lg flex flex-col cursor-pointer h-full"
+      className="group relative flex flex-col cursor-pointer h-full"
     >
-      {/* Top Image Container */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-noir-950">
+      {/* Top Image Container (The actual card) */}
+      <div className="relative aspect-[4/5] overflow-hidden bg-noir-950 border border-gold/20 group-hover:border-gold transition-all duration-500 group-hover:shadow-gold-lg">
         <img
           src={product.image}
           alt={product.name}
@@ -40,7 +40,7 @@ export const ProductCard = ({ product }) => {
       </div>
 
       {/* Product Details Section */}
-      <div className="p-4 flex-1 flex flex-col justify-center items-center text-center space-y-2 bg-noir-900">
+      <div className="pt-4 pb-2 flex-1 flex flex-col justify-start items-center text-center space-y-2 bg-transparent">
         <h3 className="font-serif text-lg font-bold text-silk group-hover:text-gold transition-colors line-clamp-2">
           {product.name}
         </h3>

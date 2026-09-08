@@ -41,45 +41,43 @@ export const ProductReviews = ({ productId }) => {
   };
 
   return (
-    <div className="mt-8 pt-6 border-t border-gold/10">
-      <h3 className="font-serif text-2xl text-silk mb-4">Customer Reviews</h3>
+    <div className="flex flex-col h-full w-full">
+      <h3 className="font-serif text-[11px] font-bold uppercase tracking-widest text-silk mb-2 text-center">Customer Reviews</h3>
 
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-3">
         {/* Write a Review Form */}
-        <div className="bg-noir-950 p-4 sm:p-5 border border-gold/10 shadow-lg">
-          <h4 className="font-serif text-lg text-gold mb-4">Write a Review</h4>
-          <form onSubmit={handleReviewSubmit} className="space-y-6">
-            <div className="space-y-2">
+        <div className="bg-noir-950 p-2 sm:p-3 border border-gold/10 shadow-md">
+          <h4 className="font-serif text-[10px] text-gold mb-2 text-center">Write a Review</h4>
+          <form onSubmit={handleReviewSubmit} className="space-y-3">
+            <div className="space-y-1 flex flex-col items-center">
               <label className="text-xs uppercase tracking-widest text-silk/60">Rating</label>
               {renderStars(newReview.rating, true)}
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-silk/60">Your Name</label>
+            <div className="space-y-1">
               <input
                 type="text"
                 required
                 value={newReview.name}
                 onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                className="w-full bg-noir-900 border border-gold/20 text-silk p-3 focus:outline-none focus:border-gold/60 transition-colors"
+                className="w-full bg-noir-900 border border-gold/20 text-silk p-1.5 text-[10px] focus:outline-none focus:border-gold/60 transition-colors"
                 placeholder="Enter your name"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs uppercase tracking-widest text-silk/60">Your Review</label>
+            <div className="space-y-1">
               <textarea
                 required
                 value={newReview.text}
                 onChange={(e) => setNewReview({ ...newReview, text: e.target.value })}
-                className="w-full bg-noir-900 border border-gold/20 text-silk p-3 h-20 resize-none focus:outline-none focus:border-gold/60 transition-colors"
-                placeholder="What did you like or dislike?"
+                className="w-full bg-noir-900 border border-gold/20 text-silk p-1.5 text-[10px] h-12 resize-none focus:outline-none focus:border-gold/60 transition-colors"
+                placeholder="Review"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-4 bg-gold-gradient text-noir font-bold uppercase tracking-widest text-sm hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all"
+              className="w-full py-2 bg-gold-gradient text-noir font-bold uppercase tracking-widest text-[9px] hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transition-all"
             >
               Post Review
             </button>
@@ -87,20 +85,22 @@ export const ProductReviews = ({ productId }) => {
         </div>
 
         {/* Display Reviews */}
-        <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gold/20">
+        <div className="space-y-2 max-h-[150px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gold/20">
           {reviews.length === 0 ? (
-            <p className="text-silk/60 italic font-serif">No reviews yet. Be the first to review!</p>
+            <p className="text-silk/60 italic font-serif text-[10px] text-center">No reviews yet.</p>
           ) : (
             reviews.map((review) => (
-              <div key={review.id} className="bg-noir-950 p-4 border border-gold/10">
-                <div className="flex justify-between items-start mb-2">
+              <div key={review.id} className="bg-noir-950 p-2 border border-gold/10 text-left">
+                <div className="flex justify-between items-start mb-1">
                   <div>
-                    <h5 className="font-semibold text-silk">{review.name}</h5>
-                    <span className="text-xs text-silk/40">{review.date}</span>
+                    <h5 className="font-semibold text-[10px] text-silk leading-none">{review.name}</h5>
+                    <span className="text-[8px] text-silk/40">{review.date}</span>
                   </div>
-                  {renderStars(review.rating)}
+                  <div className="scale-75 origin-top-right">
+                    {renderStars(review.rating)}
+                  </div>
                 </div>
-                <p className="text-silk/70 text-sm leading-relaxed">{review.text}</p>
+                <p className="text-silk/70 text-[9px] leading-relaxed line-clamp-2">{review.text}</p>
               </div>
             ))
           )}
