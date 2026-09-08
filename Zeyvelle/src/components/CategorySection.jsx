@@ -39,13 +39,13 @@ export const CategorySection = () => {
           </p>
         </div>
 
-        {/* Categories Grid (Responsive: 1 col mobile, 2 sm, 4 desktop) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Categories Grid (Responsive: 2 col mobile, 2 sm, 4 desktop) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {CATEGORIES.map((cat) => (
             <div
               key={cat.id}
               onClick={() => handleCategoryClick(cat.id)}
-              className="group relative h-96 rounded-none overflow-hidden cursor-pointer border border-gold/20 hover:border-gold transition-all duration-500 shadow-lg hover:shadow-gold-lg"
+              className="group relative h-56 sm:h-80 rounded-none overflow-hidden cursor-pointer border border-gold/20 hover:border-gold transition-all duration-500 shadow-lg hover:shadow-gold-lg"
             >
               {/* Full Bleed Image with Zoom */}
               <img
@@ -63,7 +63,7 @@ export const CategorySection = () => {
                   {cat.itemCount}
                 </span>
 
-                <h3 className="font-serif text-2xl font-bold text-silk group-hover:text-gold tracking-wide transition-colors duration-300">
+                <h3 className="font-serif text-lg sm:text-2xl font-bold text-silk group-hover:text-gold tracking-wide transition-colors duration-300">
                   {cat.name}
                 </h3>
 
