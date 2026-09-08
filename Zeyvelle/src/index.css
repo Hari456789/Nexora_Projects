@@ -131,5 +131,11 @@
 
 html {
   color-scheme: dark;
-  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
