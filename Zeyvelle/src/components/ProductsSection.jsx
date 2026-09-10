@@ -16,6 +16,7 @@ export const ProductsSection = () => {
     { id: 'party-wear', label: 'Party Wear' },
     { id: 'tops', label: 'Tops' },
     { id: 'crop-tops', label: 'Crop Tops' },
+    { id: 'coord-set', label: 'Co-ord set' },
   ];
 
   // Filter products by category and search term

@@ -39,13 +39,13 @@ export const CategorySection = () => {
           </p>
         </div>
 
-        {/* Categories Grid (Responsive: 2 col mobile, 2 sm, 4 desktop) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-          {CATEGORIES.map((cat) => (
+        {/* Categories Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-6 gap-3 sm:gap-6">
+          {CATEGORIES.map((cat, index) => (
             <div
               key={cat.id}
               onClick={() => handleCategoryClick(cat.id)}
-              className="group relative h-56 sm:h-80 rounded-none overflow-hidden cursor-pointer border border-gold/20 hover:border-gold transition-all duration-500 shadow-lg hover:shadow-gold-lg"
+              className={`group relative h-56 sm:h-80 rounded-none overflow-hidden cursor-pointer border border-gold/20 hover:border-gold transition-all duration-500 shadow-lg hover:shadow-gold-lg ${index < 3 ? 'sm:col-span-2' : 'sm:col-span-3'}`}
             >
               {/* Full Bleed Image with Zoom */}
               <img
