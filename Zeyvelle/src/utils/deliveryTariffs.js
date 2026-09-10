@@ -47,8 +47,8 @@ export const getLocationFromPincode = (pincode) => {
     return 'international';
   }
 
-  // Kottayam, Kerala
-  if (cleanPin.startsWith('686')) {
+  // Kozhikode, Kerala
+  if (cleanPin.startsWith('673')) {
     return 'local';
   }
 
